@@ -1,0 +1,23 @@
+@import 'src/constants.scss';
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.links {
+  margin: 20px 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.link {
+  text-decoration: none;
+  color: lighten($grey, 60%);
+  margin: 5px 20px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

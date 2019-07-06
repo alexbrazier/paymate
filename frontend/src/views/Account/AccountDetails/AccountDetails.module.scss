@@ -1,0 +1,19 @@
+@import 'src/constants.scss';
+
+.accountDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: $container-width;
+  margin: 20px;
+}
+
+.username {
+  margin-top: 20px;
+}
+
+.button {
+  margin: 20px 0;
+}

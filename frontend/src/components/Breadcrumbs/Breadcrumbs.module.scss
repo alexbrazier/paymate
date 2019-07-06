@@ -1,0 +1,31 @@
+@import 'src/constants.scss';
+
+.breadcrumbs {
+  padding: 10px 0;
+  list-style: none;
+  width: 100%;
+}
+
+.item {
+  display: inline;
+  font-size: 18px;
+
+  & + .item:before {
+    padding: 8px;
+    color: $white;
+    content: '/\00a0';
+  }
+}
+
+.link {
+  color: $white;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.currentPage {
+  color: $grey-l30;
+}

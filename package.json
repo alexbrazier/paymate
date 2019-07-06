@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "author": "alexbrazier",
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "yarn workspace api run build && yarn workspace frontend run build",
+    "build:docker": "yarn build && docker build . -t alexbrazier/paymate"
+  }
+}

@@ -1,0 +1,14 @@
+@import 'src/constants';
+
+.suggestNew {
+  color: $white;
+}
+
+.title {
+  text-align: center;
+}
+
+.providers {
+  display: flex;
+  flex-wrap: wrap;
+}

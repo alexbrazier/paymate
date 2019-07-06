@@ -1,0 +1,18 @@
+$light-grey: #707b8c;
+$grey: #282c34;
+$grey-l5: lighten($grey, 5%);
+$grey-l10: lighten($grey, 10%);
+$grey-l30: lighten($grey, 30%);
+$red-orange: #ea4442;
+$white: #fff;
+
+$primary: $red-orange;
+$primary-focus: darken($primary, 10%);
+$background: $grey;
+$text: $white;
+
+$container-width: 700px;
+$header-height: 50px;
+
+$font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

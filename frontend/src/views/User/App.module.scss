@@ -1,0 +1,14 @@
+@import 'src/constants';
+
+.App {
+  text-align: center;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 40px;
+}
