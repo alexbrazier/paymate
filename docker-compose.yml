@@ -1,0 +1,27 @@
+version: '2'
+
+# docker network create dbnet
+# Link running mysql to network
+# docker network connect dbnet mysql
+networks:
+  dbnet:
+    external:
+      name: dbnet
+
+services:
+  api:
+    image: paymate
+    ports:
+      - '3001:3000'
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - PORT=3000
+      - DB_HOST=mysql
+      - DB_USER=paymate
+      - DB_PASS=${DB_PASS}
+      - DB_DB=paymate
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - HOST=${HOST}
+    networks:
+      - dbnet
