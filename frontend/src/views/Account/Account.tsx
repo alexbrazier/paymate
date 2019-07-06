@@ -4,8 +4,9 @@ import { Redirect } from 'react-router';
 import Provider from '../../components/Provider';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ButtonLink } from '../../components/Button';
-import styles from './Account.module.scss';
 import Loading from '../../components/Loading';
+import usePageTitle from '../../hooks/usePageTitle';
+import styles from './Account.module.scss';
 
 const SortableProvider: any = SortableElement((props: any) => (
   <li tabIndex={0}>
@@ -27,7 +28,8 @@ const SortableList = SortableContainer(({ items }) => (
   </ul>
 ));
 
-const LoginCallback = () => {
+const Account = () => {
+  usePageTitle('Account');
   const [user, setUser] = useState();
   const [error, setError] = useState();
   useEffect(() => {
@@ -79,4 +81,4 @@ const LoginCallback = () => {
     </div>
   );
 };
-export default LoginCallback;
+export default Account;

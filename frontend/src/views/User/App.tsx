@@ -3,6 +3,7 @@ import * as API from '../../api';
 import styles from './App.module.scss';
 import Provider from '../../components/Provider';
 import Loading from '../../components/Loading';
+import usePageTitle from '../../hooks/usePageTitle';
 
 function App({
   match: {
@@ -19,6 +20,8 @@ function App({
       .then(({ data }) => setUser(data))
       .catch(err => setError(err.response.data.message));
   }, [permalink]);
+
+  usePageTitle(user ? `Pay ${user.name}` : undefined);
 
   if (error) {
     return <div className={styles.App}>{error}</div>;

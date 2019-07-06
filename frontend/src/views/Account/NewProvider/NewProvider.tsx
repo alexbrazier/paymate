@@ -2,13 +2,15 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
-import styles from './NewProvider.module.scss';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
+import usePageTitle from '../../../hooks/usePageTitle';
+import styles from './NewProvider.module.scss';
 interface Props {
   match: any;
 }
 const NewProvider: React.FC<Props> = () => {
+  usePageTitle('Add Provider');
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();

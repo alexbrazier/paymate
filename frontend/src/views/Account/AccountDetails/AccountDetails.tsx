@@ -6,12 +6,14 @@ import Button from '../../../components/Button';
 import * as API from '../../../api';
 import Loading from '../../../components/Loading';
 import Breadcrumbs from '../../../components/Breadcrumbs';
+import usePageTitle from '../../../hooks/usePageTitle';
 
 interface Props {
   edit: boolean;
 }
 
 const Setup: React.FC<Props> = ({ edit }) => {
+  usePageTitle('Account Details');
   const [name, setName] = useState('');
   const [permalink, setPermalink] = useState('');
   const [loading, setLoading] = useState(true);

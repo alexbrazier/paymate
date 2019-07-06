@@ -6,11 +6,13 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
+import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './EditProvider.module.scss';
 
 interface Props extends RouteComponentProps<{ provider: string }> {}
 
 const EditProvider: React.FC<Props> = ({ match: { params } }) => {
+  usePageTitle('Edit Provider');
   const [provider, setProvider] = useState();
   const [permalink, setPermalink] = useState('');
   const [saved, setSaved] = useState(false);
