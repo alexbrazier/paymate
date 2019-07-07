@@ -45,6 +45,7 @@
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
+    "cypress": "^3.3.2",
     "eslint-plugin-react": "^7.14.2",
     "node-sass": "^4.12.0"
   }
