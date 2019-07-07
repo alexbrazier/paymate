@@ -1,9 +1,9 @@
 import httpStatus from 'http-status';
 
 class APIError extends Error {
-  private status: number;
-  private isPublic: boolean;
-  private isOperational: boolean;
+  public status: number;
+  public isPublic: boolean;
+  public isOperational: boolean;
   public constructor(
     message: string,
     status: number = httpStatus.INTERNAL_SERVER_ERROR,
