@@ -9,7 +9,7 @@ context('Register', () => {
     const email = 'user1@paymate.me';
     cy.get('input').type(email);
     cy.get('form').submit();
-    cy.get('p').contains('A login email has been sent to');
+    cy.get('[e2e-handle="email-sent"]');
 
     // then user should be able to retry sending email
     cy.get('button')
@@ -17,6 +17,6 @@ context('Register', () => {
       .click();
     cy.get('input[type="email"]').should('have.value', email);
     cy.get('form').submit();
-    cy.get('p').contains('A login email has been sent to');
+    cy.get('[e2e-handle="email-sent"]');
   });
 });

@@ -7,10 +7,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:e2e": "cypress run",
+    "test:e2e:local": "cypress open",
     "lint": "eslint \"src/**/*.{j,t}s{x,}\"",
     "prettier": "prettier \"src/**/*.{js,ts,tsx,jsx,css,scss,json,html}\"",
     "prettier:check": "yarn prettier --check",
-    "prettier:write": "yarn prettier --write"
+    "prettier:write": "yarn prettier --write",
+    "wait": "wait-on http-get://localhost:5000/api/health"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
@@ -47,6 +50,7 @@
     "@types/react-router-dom": "^4.3.4",
     "cypress": "^3.3.2",
     "eslint-plugin-react": "^7.14.2",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.12.0",
+    "wait-on": "^3.2.0"
   }
 }

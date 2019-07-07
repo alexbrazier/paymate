@@ -2,12 +2,12 @@ version: 2.1
 
 executors:
   default:
-    working_directory: /usr/src
+    working_directory: ~/repo
     docker:
       - image: circleci/node:10.16.0
 
   browsers:
-    working_directory: /usr/src
+    working_directory: ~/repo
     docker:
       - image: circleci/node:10.16.0-browsers
       - image: circleci/mysql:8.0.4
@@ -38,6 +38,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
+            - ./repo
             - ./.cache/Cypress
 
   lint:
@@ -47,7 +48,7 @@ jobs:
           at: ~/
       - run:
           name: Prettier Frontend
-          command: yarn prettier:check && echo -e "\033[0;32mPrettier passed"
+          command: yarn prettier && echo -e "\033[0;32mPrettier passed"
       - run:
           name: ESLint
           command: |

@@ -56,7 +56,7 @@ const Register: React.FC = () => {
   if (state.success) {
     return (
       <>
-        <p>A login email has been sent to {email}.</p>
+        <p e2e-handle="email-sent">A login email has been sent to {email}.</p>
         <Button onClick={() => dispatch({ type: actions.LOGIN_RETRY })}>
           Not received an email? Retry
         </Button>
