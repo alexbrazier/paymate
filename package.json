@@ -6,7 +6,7 @@
     "frontend"
   ],
   "scripts": {
-    "build": "yarn workspace api run build && yarn workspace frontend run build",
+    "build": "yarn workspaces run build",
     "build:docker": "yarn build && docker build . -t alexbrazier/paymate",
     "lint": "yarn workspaces run lint",
     "prettier": "yarn workspaces run prettier:check",
