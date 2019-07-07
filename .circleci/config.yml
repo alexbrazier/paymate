@@ -94,6 +94,28 @@ jobs:
       - run:
           name: Build Docker image
           command: yarn build:docker
+      - run:
+          name: Save Docker image
+          command: mkdir -p /tmp/cache/docker && docker save alexbrazier/paymate > /tmp/cache/docker/paymate.tar
+      - persist_to_workspace:
+          root: /tmp/cache
+          paths:
+            - ./docker
+  publish:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: /tmp/cache
+      - setup_remote_docker
+      - run:
+          name: Load docker image
+          command: docker load < /tmp/cache/docker/paymate.tar
+      - run:
+          name: Docker login
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run:
+          name: Publish
+          command: docker push alexbrazier/paymate
 
 workflows:
   version: 2
@@ -109,3 +131,11 @@ workflows:
       - e2e-test:
           requires:
             - setup
+      - publish:
+          requires:
+            - lint
+            - build
+            - e2e-test
+          filters:
+            branches:
+              only: master
