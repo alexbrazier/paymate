@@ -32,7 +32,7 @@ const Provider: React.FC<Props> = ({
   icon,
   name,
   url,
-  url_amount,
+  url_amount: urlAmount,
   permalink,
   amount,
   to,
@@ -42,7 +42,7 @@ const Provider: React.FC<Props> = ({
   const Wrapper = url ? 'a' : to ? Link : 'div';
   return (
     <Wrapper
-      href={url && getUrl(amount ? url_amount : url, permalink, amount)}
+      href={url && getUrl(amount ? urlAmount : url, permalink, amount)}
       to={to}
       {...props}
     >

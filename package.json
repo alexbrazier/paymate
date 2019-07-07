@@ -8,5 +8,10 @@
   "scripts": {
     "build": "yarn workspace api run build && yarn workspace frontend run build",
     "build:docker": "yarn build && docker build . -t alexbrazier/paymate"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "eslint": "^6.0.1"
   }
 }

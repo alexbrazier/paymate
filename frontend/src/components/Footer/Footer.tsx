@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Footer.module.scss';
 
-interface Props {}
-
-const Footer: React.FC<Props> = () => (
+const Footer: React.FC = () => (
   <footer className={styles.footer}>
     <div className={styles.links}>
       <Link className={styles.link} to="/">

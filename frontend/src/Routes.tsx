@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-export default () => (
+const Routes = () => (
   <Router>
     <Route
       path="/"
@@ -57,3 +57,5 @@ export default () => (
     <Footer />
   </Router>
 );
+
+export default Routes;

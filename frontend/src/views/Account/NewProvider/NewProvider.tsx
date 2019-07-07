@@ -42,7 +42,7 @@ const NewProvider: React.FC<Props> = () => {
         {loading && <Loading />}
         {!loading && !providers.length && (
           <>
-            <p>You've already added all of the providers. </p>
+            <p>You{"'"}ve already added all of the providers.</p>
             <p>
               <a
                 className={styles.suggestNew}

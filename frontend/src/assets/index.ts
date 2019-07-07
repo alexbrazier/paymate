@@ -1,4 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
 export interface AssetMap {
   [name: string]: string;
 }
