@@ -10,7 +10,8 @@
     "start:once": "node -r ts-node/register src/index.ts",
     "start:prod": "knex migrate:latest && node index",
     "build": "rimraf dist && tsc",
-    "migrate": "knex migrate:latest --knexfile dist/knexfile.js"
+    "migrate": "knex migrate:latest --knexfile dist/knexfile.js",
+    "lint": "eslint \"src/**/*.{j,t}s\""
   },
   "dependencies": {
     "body-parser": "^1.19.0",

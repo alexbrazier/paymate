@@ -1,6 +1,6 @@
 import Knex from 'knex';
 
-exports.up = function(knex: Knex, Promise: Promise<any>) {
+exports.up = function(knex: Knex) {
   return knex.schema
     .createTable('users', function(table) {
       table.uuid('id').primary();
@@ -40,4 +40,4 @@ exports.up = function(knex: Knex, Promise: Promise<any>) {
     );
 };
 
-exports.down = function(knex, Promise) {};
+exports.down = function() {};

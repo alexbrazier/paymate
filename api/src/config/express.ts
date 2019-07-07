@@ -95,7 +95,7 @@ app.use((
   err: APIError,
   req: IRequest,
   res: IResponse,
-  next: INextFunction // eslint-disable-line no-unused-vars
+  next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
 ) =>
   res.status(err.status).json({
     message: err.isPublic ? err.message : httpStatus[err.status],

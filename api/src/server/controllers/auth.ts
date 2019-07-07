@@ -1,7 +1,7 @@
 import util from 'util';
 import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
-import { IRequest, IResponse, INextFunction } from '../../types';
+import { IRequest, IResponse } from '../../types';
 import APIError from '../helpers/APIError';
 import * as User from '../models/User';
 import { sendMagicLinkEmail } from '../helpers/Mailer';

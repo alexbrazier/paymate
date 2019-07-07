@@ -7,7 +7,8 @@
   ],
   "scripts": {
     "build": "yarn workspace api run build && yarn workspace frontend run build",
-    "build:docker": "yarn build && docker build . -t alexbrazier/paymate"
+    "build:docker": "yarn build && docker build . -t alexbrazier/paymate",
+    "lint": "yarn workspaces run lint"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",

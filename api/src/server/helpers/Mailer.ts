@@ -7,20 +7,6 @@ const FROM = 'PayMate <noreply@paymate.me>';
 
 const emailDisabled = !config.email.user || !config.email.pass;
 
-function sendMagicLinkEmail({ email, link }) {
-  if (emailDisabled) {
-    logger.info(`Email: ${email}, link: ${link}`);
-  }
-  const mailOpts = {
-    from: FROM,
-    to: email,
-    subject: `PayMate Magic Login Link`,
-    html: magicLinkEmail(link),
-  };
-
-  return sendEmail(mailOpts);
-}
-
 function sendEmail(mailOpts) {
   if (emailDisabled) {
     logger.info('Email not sent, as it is disabled');
@@ -49,6 +35,20 @@ function sendEmail(mailOpts) {
     });
     resolve({ success: true });
   });
+}
+
+function sendMagicLinkEmail({ email, link }) {
+  if (emailDisabled) {
+    logger.info(`Email: ${email}, link: ${link}`);
+  }
+  const mailOpts = {
+    from: FROM,
+    to: email,
+    subject: `PayMate Magic Login Link`,
+    html: magicLinkEmail(link),
+  };
+
+  return sendEmail(mailOpts);
 }
 
 export { sendMagicLinkEmail };
