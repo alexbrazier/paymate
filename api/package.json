@@ -11,7 +11,10 @@
     "start:prod": "knex migrate:latest && node index",
     "build": "rimraf dist && tsc",
     "migrate": "knex migrate:latest --knexfile dist/knexfile.js",
-    "lint": "eslint \"src/**/*.{j,t}s\""
+    "lint": "eslint \"src/**/*.{j,t}s\"",
+    "prettier": "prettier \"src/**/*.{js,ts,json}\"",
+    "prettier:check": "yarn prettier --check",
+    "prettier:write": "yarn prettier --write"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

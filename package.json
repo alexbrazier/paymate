@@ -8,11 +8,14 @@
   "scripts": {
     "build": "yarn workspace api run build && yarn workspace frontend run build",
     "build:docker": "yarn build && docker build . -t alexbrazier/paymate",
-    "lint": "yarn workspaces run lint"
+    "lint": "yarn workspaces run lint",
+    "prettier": "yarn workspaces run prettier:check",
+    "prettier:write": "yarn workspaces run prettier:write"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
-    "eslint": "^6.0.1"
+    "eslint": "^6.0.1",
+    "prettier": "^1.18.2"
   }
 }
