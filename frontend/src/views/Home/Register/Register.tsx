@@ -74,7 +74,7 @@ const Register: React.FC = () => {
         value={email}
         onValue={setEmail}
       />
-      <Button className={styles.button} disabled={state.loading}>
+      <Button className={styles.button} disabled={state.loading} type="submit">
         Access My Page
       </Button>
     </form>

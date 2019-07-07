@@ -61,7 +61,9 @@ const EditProvider: React.FC<Props> = ({ match: { params } }) => {
           onValue={setPermalink}
           placeholder="Username"
         />
-        <Button className={styles.save}>Save</Button>
+        <Button className={styles.save} type="submit">
+          Save
+        </Button>
         <Button onClick={remove} className={styles.save}>
           Delete
         </Button>

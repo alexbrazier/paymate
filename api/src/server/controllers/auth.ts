@@ -43,7 +43,6 @@ export async function callback(req: IRequest, res: IResponse) {
     const authToken = jwt.sign(
       {
         id: user.id,
-        name: user.name,
         email: decoded.email,
         exp,
         type: 'auth',
