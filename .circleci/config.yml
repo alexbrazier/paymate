@@ -10,7 +10,7 @@ executors:
     working_directory: ~/repo
     docker:
       - image: circleci/node:10.16.0-browsers
-      - image: circleci/mysql:8.0.4
+      - image: circleci/mysql:5.7.17
         environment:
           MYSQL_ROOT_PASSWORD: Password123
           MYSQL_DATABASE: paymate
@@ -69,7 +69,7 @@ jobs:
           name: E2E api background
           environment:
             HOSTS: localhost
-          command: cd api && yarn start
+          command: cd api && yarn build && yarn migrate && cd dist && node index
           background: true
       - run:
           name: Waiting for mysql to be ready
@@ -83,8 +83,7 @@ jobs:
             echo Failed waiting for MySQL && exit 1
       - run:
           name: Run E2E tests
-          command: cd frontend && yarn wait && yarn test:e2e
-          # --record --key $CYPRESS_KEY
+          command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
 
   build:
     executor: default
