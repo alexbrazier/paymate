@@ -6,7 +6,7 @@ const usePageTitle = (title?: string) => {
     if (title) {
       document.title = `Paymate - ${title}`;
     } else {
-      document.title = 'Paymate';
+      document.title = 'Paymate - Send money instantly through a link';
     }
     return () => (document.title = previousTitle);
   }, [title]);
