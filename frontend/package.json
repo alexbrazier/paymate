@@ -51,7 +51,7 @@
     "@types/react-router-dom": "^4.3.4",
     "cypress": "^3.3.2",
     "eslint-plugin-react": "^7.14.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "wait-on": "^3.2.0"
   }
 }
