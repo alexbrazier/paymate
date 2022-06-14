@@ -1,19 +1,26 @@
 import axios from 'axios';
 
+const apiUrl =
+  typeof window === 'undefined'
+    ? process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://localhost:8000/api'
+    : '/api';
+
+const api = axios.create({
+  baseURL: apiUrl,
+});
+
 const getHeaders = () => {
   const token = localStorage.getItem('token');
 
   return { Authorization: `Bearer ${token}` };
 };
 
-export const getUser = (permalink: string) =>
-  axios.get(`/api/user/${permalink}`);
+export const getUser = (permalink: string) => api.get(`/user/${permalink}`);
 
-export const login = (email: string) =>
-  axios.post('/api/auth/login', { email });
+export const login = (email: string) => api.post('/auth/login', { email });
 
 export const verifyToken = (token: string) =>
-  axios.get('/api/auth/callback', { params: { token } });
+  api.get('/auth/callback', { params: { token } });
 
 export const accountDetails = () => {
   return axios.get('/api/user', {

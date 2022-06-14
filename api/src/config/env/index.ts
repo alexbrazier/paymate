@@ -45,7 +45,7 @@ interface IConfig {
 
 const defaults = {
   root: path.join(__dirname, '/..'),
-  port: 5000,
+  port: 8000,
   db: {
     host: 'localhost',
     user: 'root',

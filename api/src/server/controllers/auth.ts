@@ -7,7 +7,7 @@ import * as User from '../models/User';
 import { sendMagicLinkEmail } from '../helpers/Mailer';
 import config from '../../config/env';
 
-const verifyJwt = util.promisify(jwt.verify);
+const verifyJwt = util.promisify(jwt.verify) as any;
 
 export async function login(req: IRequest, res: IResponse) {
   const { email } = req.body;

@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
 import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './NewProvider.module.scss';
+import { useRouter } from 'next/router';
 interface Props {
   match: any;
 }
@@ -15,6 +15,7 @@ const NewProvider: React.FC<Props> = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [saved, setSaved] = useState();
+  const router = useRouter();
   useEffect(() => {
     API.getAvailableProviders()
       .then(({ data }) => setProviders(data.providers))
@@ -28,7 +29,8 @@ const NewProvider: React.FC<Props> = () => {
       .catch(err => setError(err.response.data.message));
   };
   if (saved) {
-    return <Redirect to={`/account/provider/${saved}`} />;
+    router.push(`/account/provider/${saved}`);
+    return null;
   }
   return (
     <Fragment>

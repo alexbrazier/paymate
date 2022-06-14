@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as API from '../../api';
-import { Redirect } from 'react-router';
+import Router from 'next/router';
 import Provider from '../../components/Provider';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ButtonLink } from '../../components/Button';
@@ -52,13 +52,15 @@ const Account = () => {
     });
   };
   if (error) {
-    return <Redirect to={`/?error=${error}`} />;
+    Router.push(`/?error=${error}`);
+    return null;
   }
   if (!user) {
     return <Loading />;
   }
   if (!user.permalink) {
-    return <Redirect to="/account/setup" />;
+    Router.push('/account/setup');
+    return null;
   }
   return (
     <div>

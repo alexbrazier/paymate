@@ -4,18 +4,19 @@
   "author": "alexbrazier",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "next",
+    "start": "next start",
+    "build": "next build",
+    "test": "jest",
     "test:e2e": "cypress run",
     "test:e2e:local": "cypress open",
     "lint": "eslint \"src/**/*.{j,t}s{x,}\"",
     "prettier": "prettier \"src/**/*.{js,ts,tsx,jsx,css,scss,json,html}\"",
     "prettier:check": "yarn prettier --check",
     "prettier:write": "yarn prettier --write",
-    "wait": "wait-on http-get://localhost:5000/api/health"
+    "wait": "wait-on http-get://localhost:8000/api/health"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:8000",
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -32,26 +33,23 @@
     ]
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "classnames": "^2.2.6",
-    "firebase": "^6.2.3",
-    "qs": "^6.7.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "axios": "^0.27.2",
+    "classnames": "^2.3.1",
+    "http-proxy-middleware": "^1.0.3",
+    "next": "^12.1.6",
+    "qs": "^6.10.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-sortable-hoc": "^1.9.1"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.8",
-    "@types/nodemailer": "^6.2.0",
     "@types/qs": "^6.5.3",
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
-    "@types/react-router-dom": "^4.3.4",
     "cypress": "^3.3.2",
     "eslint-plugin-react": "^7.14.2",
-    "node-sass": "^4.12.0",
+    "sass": "^1.50.0",
     "wait-on": "^3.2.0"
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
 import styles from './styles.module.scss';
-import assets from '../../assets';
-import { Link } from 'react-router-dom';
 
 interface Props extends React.HTMLProps<any> {
   icon: string;
@@ -28,6 +27,12 @@ const getUrl = (url: string, permalink: string, amount?: string) => {
   return replacedUrl;
 };
 
+const CustomLink = ({ to, children, ...props }) => (
+  <Link href={to}>
+    <a {...props}>{children}</a>
+  </Link>
+);
+
 const Provider: React.FC<Props> = ({
   icon,
   name,
@@ -39,14 +44,18 @@ const Provider: React.FC<Props> = ({
   ...props
 }) => {
   // TODO use button instead of div
-  const Wrapper = url ? 'a' : to ? Link : 'div';
+  const Wrapper = url ? 'a' : to ? CustomLink : 'div';
   return (
     <Wrapper
       href={url && getUrl(amount ? urlAmount : url, permalink, amount)}
       to={to}
       {...props}
     >
-      <img src={assets[`${icon}.jpg`]} className={styles.provider} alt={name} />
+      <img
+        src={`/static/providers/${icon}.jpg`}
+        className={styles.provider}
+        alt={name}
+      />
     </Wrapper>
   );
 };

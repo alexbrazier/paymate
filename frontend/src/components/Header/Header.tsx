@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import Link from 'next/link';
 import cn from 'classnames';
 import * as API from '../../api';
-import logo from '../../assets/logo.png';
 import styles from './Header.module.scss';
 import useClickOutside from './useClickOutside';
+import { useRouter } from 'next/router';
 
-interface Props extends RouteComponentProps {}
+interface Props {}
 
-const Header: React.FC<Props> = ({ history, location: { pathname } }) => {
+const Header: React.FC<Props> = () => {
   const [user, setUser] = useState();
   const [showMenu, setShowMenu] = useState(false);
   const hideMenu = useCallback(() => setShowMenu(false), [setShowMenu]);
   const ref = useClickOutside(hideMenu, !showMenu);
+  const router = useRouter();
 
   useEffect(() => {
     if (user || !localStorage.getItem('token')) {
@@ -21,12 +22,12 @@ const Header: React.FC<Props> = ({ history, location: { pathname } }) => {
     API.accountDetails()
       .then(({ data }) => setUser(data))
       .catch(() => {});
-  }, [pathname, user]);
+  }, [router.pathname, user]);
 
   const onLogout = () => {
     setShowMenu(false);
     setUser(null);
-    history.push('/');
+    router.push('/');
     localStorage.removeItem('token');
   };
 
@@ -38,9 +39,11 @@ const Header: React.FC<Props> = ({ history, location: { pathname } }) => {
 
   return (
     <header className={styles.header}>
-      <Link to="/" className={cn(styles.userButton, styles.logoButton)}>
-        <img className={styles.logo} src={logo} alt="" />
-        PayMate
+      <Link href="/">
+        <a className={cn(styles.userButton, styles.logoButton)}>
+          <img className={styles.logo} src="/static/logo.png" alt="" />
+          PayMate
+        </a>
       </Link>
       {user && (
         <div className={styles.user} ref={ref}>
@@ -54,12 +57,10 @@ const Header: React.FC<Props> = ({ history, location: { pathname } }) => {
             <ul className={styles.menu}>
               {links.map(({ to, name }) => (
                 <li key={to}>
-                  <Link
-                    to={to}
-                    className={styles.userButton}
-                    onClick={hideMenu}
-                  >
-                    {name}
+                  <Link href={to}>
+                    <a className={styles.userButton} onClick={hideMenu}>
+                      {name}
+                    </a>
                   </Link>
                 </li>
               ))}
@@ -76,4 +77,4 @@ const Header: React.FC<Props> = ({ history, location: { pathname } }) => {
   );
 };
 
-export default withRouter(Header);
+export default Header;

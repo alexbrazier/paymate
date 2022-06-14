@@ -54,7 +54,7 @@ app.get('*', (req, res) => {
 // if error is not an instanceOf APIError, convert it.
 app.use(
   (
-    err: expressValidation.ValidationError | APIError,
+    err: expressValidation.ValidationError | APIError | any,
     req: IRequest,
     res: IResponse,
     next: INextFunction
@@ -62,7 +62,7 @@ app.use(
     if (err instanceof expressValidation.ValidationError) {
       // validation error contains errors which is an array of error each containing message[]
       const unifiedErrorMessage = err.errors
-        .map(error => error.messages.join('. '))
+        .map((error: any) => error.messages.join('. '))
         .join(' and ');
       const error = new APIError(unifiedErrorMessage, err.status, true);
       return next(error);

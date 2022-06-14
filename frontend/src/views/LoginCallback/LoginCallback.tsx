@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router';
-import qs from 'qs';
 import { verifyToken } from '../../api';
 import Loading from '../../components/Loading';
+import Router, { useRouter } from 'next/router';
 
-const LoginCallback = ({ location: { search } }) => {
+const LoginCallback = () => {
+  const router = useRouter();
+  const token = router.query.token as string;
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   useEffect(() => {
-    const { token } = qs.parse(search, { ignoreQueryPrefix: true });
     if (!token) {
       return setError('Token is required');
     }
@@ -19,9 +19,10 @@ const LoginCallback = ({ location: { search } }) => {
         setSuccess(true);
       })
       .catch(err => setError(err.response.data.message));
-  }, [search]);
+  }, [token]);
   if (success) {
-    return <Redirect to="/account" />;
+    Router.push('/account');
+    return null;
   }
   if (error) {
     return <p>{error}</p>;

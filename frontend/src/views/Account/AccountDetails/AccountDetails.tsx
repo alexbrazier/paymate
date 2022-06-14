@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Redirect } from 'react-router';
+import { useRouter } from 'next/router';
 import styles from './AccountDetails.module.scss';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
@@ -19,6 +19,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
   const [loading, setLoading] = useState(true);
   const [registered, setRegistered] = useState(false);
   const [error, setError] = useState();
+  const router = useRouter();
   useEffect(() => {
     API.accountDetails()
       .then(({ data }) => {
@@ -35,7 +36,8 @@ const Setup: React.FC<Props> = ({ edit }) => {
       .catch(err => setError(err.response.data.message));
   };
   if (registered) {
-    return <Redirect to="/account" />;
+    router.push('/account');
+    return null;
   }
   if (loading) {
     return <Loading />;
