@@ -134,7 +134,7 @@ workflows:
           requires:
             - lint
             - build
-            - e2e-test
+            # - e2e-test
           filters:
             branches:
               only: master
