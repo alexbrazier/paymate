@@ -11,7 +11,7 @@ export const connection = mongoose
   .then(() => {
     logger.info(`Connected to db ${config.db.db}`);
   })
-  .catch(err => {
+  .catch((err) => {
     logger.error(`DB Error: ${err.message}`, err);
   });
 
@@ -19,7 +19,7 @@ const db = mongoose.connection;
 
 export const model: typeof mongooseModel = (a, b, c, d) => {
   const Model = mongooseModel(a, b, c, d);
-  Model.on('index', function(err) {
+  Model.on('index', function (err) {
     if (err) {
       logger.error(err.message, err);
     }

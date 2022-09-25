@@ -49,7 +49,7 @@ const Register: React.FC = () => {
     dispatch({ type: actions.LOGIN });
     API.login(email)
       .then(() => dispatch({ type: actions.LOGIN_SUCCESS }))
-      .catch(err =>
+      .catch((err) =>
         dispatch({ type: actions.LOGIN_FAILURE, payload: err.message })
       );
   };

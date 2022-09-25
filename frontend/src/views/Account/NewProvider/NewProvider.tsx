@@ -19,14 +19,14 @@ const NewProvider: React.FC<Props> = () => {
   useEffect(() => {
     API.getAvailableProviders()
       .then(({ data }) => setProviders(data.providers))
-      .catch(err => setError(err.response.data.message))
+      .catch((err) => setError(err.response.data.message))
       .then(() => setLoading(false));
   }, []);
 
-  const addProvider = id => {
+  const addProvider = (id) => {
     API.addProvider(id)
       .then(() => setSaved(id))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   if (saved) {
     router.push(`/account/provider/${saved}`);
@@ -58,7 +58,7 @@ const NewProvider: React.FC<Props> = () => {
           </>
         )}
         <div className={styles.providers}>
-          {providers.map(p => (
+          {providers.map((p) => (
             <Provider
               key={p.name}
               icon={p.icon}

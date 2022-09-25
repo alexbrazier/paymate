@@ -16,7 +16,7 @@ const Input: React.FC<Props> = ({ id, label, onValue, className, ...rest }) => (
     <input
       className={cn(styles.input, label && styles.input_label)}
       name={id}
-      onChange={onValue ? e => onValue(e.currentTarget.value) : undefined}
+      onChange={onValue ? (e) => onValue(e.currentTarget.value) : undefined}
       {...rest}
     />
   </div>

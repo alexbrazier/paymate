@@ -26,19 +26,19 @@ const EditProvider: React.FC<Props> = () => {
         setPermalink(data.provider.permalink || '');
         setProvider(data.provider);
       })
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, [params.provider]);
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
     API.saveProvider(params.provider as string, permalink)
       .then(() => setSaved(true))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   const remove = () => {
     API.removeProvider(params.provider as string)
       .then(() => setSaved(true))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   if (saved) {
     router.push('/account');

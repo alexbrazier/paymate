@@ -20,7 +20,7 @@ function App({ user: initialUser, error: initialError }) {
     }
     API.getUser(permalink as string)
       .then(({ data }) => setUser(data))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, [permalink]);
 
   usePageTitle(user ? `Pay ${user.name}` : undefined);
@@ -39,7 +39,7 @@ function App({ user: initialUser, error: initialError }) {
       </Head>
       <section>
         <h1 className={styles.title}>Pay {user.name}</h1>
-        {user.providers.map(provider => (
+        {user.providers.map((provider) => (
           <Provider key={provider.name} {...provider} amount={amount} />
         ))}
       </section>
@@ -47,7 +47,7 @@ function App({ user: initialUser, error: initialError }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { data } = await API.getUser(context.params.permalink as string);
     return { props: { user: data } };

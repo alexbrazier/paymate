@@ -3,10 +3,7 @@ import Joi from 'joi';
 export default {
   login: {
     body: {
-      email: Joi.string()
-        .email()
-        .lowercase()
-        .required(),
+      email: Joi.string().email().lowercase().required(),
     },
   },
   callback: {
@@ -44,27 +41,18 @@ export default {
           'translate'
         )
         .required(),
-      name: Joi.string()
-        .min(1)
-        .max(80)
-        .required(),
+      name: Joi.string().min(1).max(80).required(),
     },
   },
   saveProvider: {
     body: {
-      permalink: Joi.string()
-        .lowercase()
-        .required(),
+      permalink: Joi.string().lowercase().required(),
     },
   },
   updateOrder: {
     body: {
-      oldIndex: Joi.number()
-        .min(0)
-        .required(),
-      newIndex: Joi.number()
-        .min(0)
-        .required(),
+      oldIndex: Joi.number().min(0).required(),
+      newIndex: Joi.number().min(0).required(),
     },
   },
 };

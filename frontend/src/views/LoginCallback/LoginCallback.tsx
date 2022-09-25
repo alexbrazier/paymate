@@ -18,7 +18,7 @@ const LoginCallback = () => {
         localStorage.setItem('token', data.token);
         setSuccess(true);
       })
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, [token]);
   if (success) {
     Router.push('/account');

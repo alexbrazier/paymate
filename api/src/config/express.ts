@@ -36,8 +36,7 @@ if (config.env === 'development') {
     expressWinston.logger({
       winstonInstance,
       meta: true, // optional: log meta data about request (defaults to true)
-      msg:
-        'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
       colorStatus: true, // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
     })
   );
@@ -69,12 +68,7 @@ app.use(
     } else if (!(err instanceof APIError)) {
       const apiError = new APIError(err.message, err.status, err.isPublic);
       apiError.stack =
-        apiError.stack
-          .split('\n')
-          .slice(0, 2)
-          .join('\n') +
-        '\n' +
-        err.stack;
+        apiError.stack.split('\n').slice(0, 2).join('\n') + '\n' + err.stack;
       return next(apiError);
     }
     return next(err);
@@ -91,16 +85,17 @@ if (config.env !== 'test') {
 }
 
 // error handler, send stacktrace only during development
-app.use((
-  err: APIError,
-  req: IRequest,
-  res: IResponse,
-  next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
-) =>
-  res.status(err.status).json({
-    message: err.isPublic ? err.message : httpStatus[err.status],
-    stack: config.env === 'development' ? err.stack : {},
-  })
+app.use(
+  (
+    err: APIError,
+    req: IRequest,
+    res: IResponse,
+    next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
+  ) =>
+    res.status(err.status).json({
+      message: err.isPublic ? err.message : httpStatus[err.status],
+      stack: config.env === 'development' ? err.stack : {},
+    })
 );
 
 export default app;

@@ -37,7 +37,7 @@ const Account = () => {
       .then(({ data }) => {
         setUser(data);
       })
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, []);
   const updateOrder = ({ oldIndex, newIndex }) => {
     const oldProviders = [...user.providers];
@@ -46,7 +46,7 @@ const Account = () => {
     providers.splice(newIndex, 0, item);
     const newUser = { ...user, providers };
     setUser(newUser);
-    API.updateProviderOrder(item._id, oldIndex, newIndex).catch(err => {
+    API.updateProviderOrder(item._id, oldIndex, newIndex).catch((err) => {
       setUser({ ...user, providers: oldProviders });
       setError(err.response.data.message);
     });

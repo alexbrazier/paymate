@@ -28,7 +28,7 @@ export const accountDetails = () => {
   });
 };
 
-export const setDetails = details => {
+export const setDetails = (details) => {
   return axios.post('/api/user', details, {
     headers: getHeaders(),
   });

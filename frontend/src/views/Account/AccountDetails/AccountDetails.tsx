@@ -33,7 +33,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
     e.preventDefault();
     API.setDetails({ name, permalink })
       .then(() => setRegistered(true))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   if (registered) {
     router.push('/account');
