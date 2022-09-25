@@ -127,9 +127,9 @@ workflows:
       - build:
           requires:
             - setup
-      - e2e-test:
-          requires:
-            - setup
+      # - e2e-test:
+      #     requires:
+      #       - setup
       - publish:
           requires:
             - lint
