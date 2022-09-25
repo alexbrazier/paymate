@@ -16,8 +16,8 @@ const getUserDetails = async ({ query, isPublic = true }: any) => {
     name: user.name,
     permalink: user.permalink,
     providers: user.providers
-      .filter(provider => !isPublic || !!provider.permalink)
-      .map(provider => ({
+      .filter((provider) => !isPublic || !!provider.permalink)
+      .map((provider) => ({
         ...provider.provider,
         permalink: provider.permalink,
       })),
@@ -70,7 +70,7 @@ export async function getProvider(req: IRequest, res: IResponse, next) {
   }
 
   const foundProvider = user.providers.find(
-    p => p.provider._id.toString() === req.params.provider
+    (p) => p.provider._id.toString() === req.params.provider
   );
   const provider = foundProvider.provider;
 
@@ -94,7 +94,7 @@ export async function saveProvider(req: IRequest, res: IResponse, next) {
     return next(new APIError('User not found', httpStatus.NOT_FOUND, true));
   }
   user.providers.find(
-    p => p.provider.toString() === req.params.provider
+    (p) => p.provider.toString() === req.params.provider
   ).permalink = req.body.permalink;
   await user.save();
 
@@ -107,7 +107,7 @@ export async function addProvider(req: IRequest, res: IResponse, next) {
     return next(new APIError('User not found', httpStatus.NOT_FOUND, true));
   }
 
-  if (!user.providers.find(p => p.provider === req.params.provider)) {
+  if (!user.providers.find((p) => p.provider === req.params.provider)) {
     user.providers.push({ provider: req.params.provider });
     await user.save();
   }
@@ -140,7 +140,7 @@ export async function updateProviderOrder(req: IRequest, res: IResponse) {
   const { oldIndex, newIndex } = req.body;
 
   const provider = user.providers.findIndex(
-    p => p.provider.toString() === req.params.provider
+    (p) => p.provider.toString() === req.params.provider
   );
 
   if (provider === -1 || oldIndex !== provider) {

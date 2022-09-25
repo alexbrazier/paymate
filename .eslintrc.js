@@ -25,5 +25,6 @@ module.exports = {
     '@typescript-eslint/indent': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-empty-function': 0,
+    'arrow-parens': 0,
   },
 };
