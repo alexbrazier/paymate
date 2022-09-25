@@ -23,9 +23,9 @@ interface IConfig {
   root: string;
   db: {
     host: string;
-    user: string;
-    password: string;
-    database: string;
+    user?: string;
+    pass?: string;
+    db: string;
   };
   env: string;
   port: number;
@@ -48,9 +48,9 @@ const defaults = {
   port: 8000,
   db: {
     host: 'localhost',
-    user: 'root',
-    password: 'Password123',
-    database: 'paymate',
+    // user: 'root',
+    // pass: 'Password123',
+    db: 'paymate',
   },
   jwtSecret: '8e4a51a2-4563-4dd3-949e-5bc655b3eba8',
   host: process.env.HOST || 'http://localhost:3000',

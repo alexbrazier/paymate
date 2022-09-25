@@ -20,6 +20,7 @@ const EditProvider: React.FC<Props> = () => {
   const router = useRouter();
   const params = router.query;
   useEffect(() => {
+    if (!router.isReady) return;
     API.getUserProvider(params.provider as string)
       .then(({ data }) => {
         setPermalink(data.provider.permalink || '');

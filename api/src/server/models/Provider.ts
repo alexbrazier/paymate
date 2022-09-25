@@ -1,22 +1,24 @@
-import db from '../../config/db';
-
-const TABLE = 'providers';
-
-export function availableProviders(userId: string) {
-  return db(TABLE)
-    .whereNotIn(
-      'id',
-      db('user_providers')
-        .where({ user_id: userId })
-        .whereNotNull('permalink')
-        .orderBy('order')
-        .select('provider_id')
-    )
-    .select('*');
+import { Schema, Document } from 'mongoose';
+import { model } from '../../config/db';
+export interface IProvider {
+  name: string;
+  icon: string;
+  url: string;
+  urlAmount: string;
 }
-export function get(name: string) {
-  return db(TABLE)
-    .where({ name })
-    .first()
-    .select('*');
-}
+
+export interface IProviderModel extends IProvider, Document {}
+
+const ProviderSchema = new Schema(
+  {
+    name: { type: String },
+    icon: { type: String },
+    url: { type: String },
+    urlAmount: { type: String },
+  },
+  { timestamps: false }
+);
+
+const Provider = model<IProviderModel>('Provider', ProviderSchema);
+
+export default Provider;

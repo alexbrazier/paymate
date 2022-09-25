@@ -64,7 +64,7 @@ const NewProvider: React.FC<Props> = () => {
               icon={p.icon}
               name={p.name}
               tabIndex={0}
-              onClick={() => addProvider(p.id)}
+              onClick={() => addProvider(p._id)}
             />
           ))}
         </div>

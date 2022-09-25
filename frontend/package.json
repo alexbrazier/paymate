@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "start": "next start",
+    "start": "yarn dev",
+    "start:prod": "next start",
     "build": "next build",
     "test": "jest",
     "test:e2e": "cypress run",

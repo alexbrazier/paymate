@@ -22,7 +22,7 @@ const SortableList = SortableContainer(({ items }) => (
         index={index}
         icon={provider.icon}
         name={provider.name}
-        to={`/account/provider/${provider.id}`}
+        to={`/account/provider/${provider._id}`}
       />
     ))}
   </ul>
@@ -46,7 +46,7 @@ const Account = () => {
     providers.splice(newIndex, 0, item);
     const newUser = { ...user, providers };
     setUser(newUser);
-    API.updateProviderOrder(item.id, oldIndex, newIndex).catch(err => {
+    API.updateProviderOrder(item._id, oldIndex, newIndex).catch(err => {
       setUser({ ...user, providers: oldProviders });
       setError(err.response.data.message);
     });
