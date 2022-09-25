@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as API from '../../api';
-import { Redirect } from 'react-router';
+import Router from 'next/router';
 import Provider from '../../components/Provider';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ButtonLink } from '../../components/Button';
@@ -14,7 +14,7 @@ const SortableProvider: any = SortableElement((props: any) => (
   </li>
 ));
 
-const SortableList = SortableContainer(({ items }) => (
+const SortableList = SortableContainer(({ items }: any) => (
   <ul className={styles.items}>
     {items.map((provider, index) => (
       <SortableProvider
@@ -22,7 +22,7 @@ const SortableList = SortableContainer(({ items }) => (
         index={index}
         icon={provider.icon}
         name={provider.name}
-        to={`/account/provider/${provider.id}`}
+        to={`/account/provider/${provider._id}`}
       />
     ))}
   </ul>
@@ -30,14 +30,14 @@ const SortableList = SortableContainer(({ items }) => (
 
 const Account = () => {
   usePageTitle('Account');
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [error, setError] = useState();
   useEffect(() => {
     API.accountDetails()
       .then(({ data }) => {
         setUser(data);
       })
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, []);
   const updateOrder = ({ oldIndex, newIndex }) => {
     const oldProviders = [...user.providers];
@@ -46,19 +46,21 @@ const Account = () => {
     providers.splice(newIndex, 0, item);
     const newUser = { ...user, providers };
     setUser(newUser);
-    API.updateProviderOrder(item.id, oldIndex, newIndex).catch(err => {
+    API.updateProviderOrder(item._id, oldIndex, newIndex).catch((err) => {
       setUser({ ...user, providers: oldProviders });
       setError(err.response.data.message);
     });
   };
   if (error) {
-    return <Redirect to={`/?error=${error}`} />;
+    Router.push(`/?error=${error}`);
+    return null;
   }
   if (!user) {
     return <Loading />;
   }
   if (!user.permalink) {
-    return <Redirect to="/account/setup" />;
+    Router.push('/account/setup');
+    return null;
   }
   return (
     <div>
@@ -69,6 +71,7 @@ const Account = () => {
       </p>
       {
         <SortableList
+          // @ts-ignore
           items={user.providers}
           axis="xy"
           pressDelay={100}

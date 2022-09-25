@@ -7,7 +7,7 @@ class APIError extends Error {
   public constructor(
     message: string,
     status: number = httpStatus.INTERNAL_SERVER_ERROR,
-    isPublic: boolean = false
+    isPublic = false
   ) {
     super(message);
     this.name = this.constructor.name;

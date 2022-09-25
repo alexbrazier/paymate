@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
+import Link from 'next/link';
 import styles from './Breadcrumbs.module.scss';
 
 interface Breadcrumb {
@@ -18,8 +18,8 @@ const Breadcrumbs: React.FC<Props> = ({ breadcrumbs, currentPage }) => {
     <ul className={styles.breadcrumbs}>
       {breadcrumbs.map(({ path, name }) => (
         <li className={styles.item} key="path">
-          <Link className={styles.link} to={path}>
-            {name}
+          <Link href={path}>
+            <a className={styles.link}>{name}</a>
           </Link>
         </li>
       ))}

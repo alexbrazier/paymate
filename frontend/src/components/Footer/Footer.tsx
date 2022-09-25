@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styles from './Footer.module.scss';
+import Link from 'next/link';
 
 const Footer: React.FC = () => (
   <footer className={styles.footer}>
     <div className={styles.links}>
-      <Link className={styles.link} to="/">
-        Create your own page
+      <Link href="/">
+        <a className={styles.link}>Create your own page</a>
       </Link>
       <a
         className={styles.link}

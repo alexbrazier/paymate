@@ -1,5 +1,5 @@
 import express from 'express';
-import validate from 'express-validation';
+import { validate } from 'express-validation';
 import userValidation from '../validation/user';
 import { login, callback } from '../controllers/auth';
 import asyncMiddleware from '../middleware/async';

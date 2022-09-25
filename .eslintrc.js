@@ -22,11 +22,9 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-empty-interface': 0,
     '@typescript-eslint/interface-name-prefix': 0,
-    '@typescript-eslint/camelcase': [
-      'error',
-      {
-        properties: 'never',
-      },
-    ],
+    '@typescript-eslint/indent': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-empty-function': 0,
+    'arrow-parens': 0,
   },
 };

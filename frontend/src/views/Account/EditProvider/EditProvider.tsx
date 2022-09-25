@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Input from '../../../components/Input';
@@ -8,37 +7,42 @@ import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
 import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './EditProvider.module.scss';
+import { useRouter } from 'next/router';
 
-interface Props extends RouteComponentProps<{ provider: string }> {}
+interface Props {}
 
-const EditProvider: React.FC<Props> = ({ match: { params } }) => {
+const EditProvider: React.FC<Props> = () => {
   usePageTitle('Edit Provider');
-  const [provider, setProvider] = useState();
+  const [provider, setProvider] = useState<any>();
   const [permalink, setPermalink] = useState('');
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState();
+  const router = useRouter();
+  const params = router.query;
   useEffect(() => {
-    API.getUserProvider(params.provider)
+    if (!router.isReady) return;
+    API.getUserProvider(params.provider as string)
       .then(({ data }) => {
         setPermalink(data.provider.permalink || '');
         setProvider(data.provider);
       })
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   }, [params.provider]);
 
   const save = (e: React.FormEvent) => {
     e.preventDefault();
-    API.saveProvider(params.provider, permalink)
+    API.saveProvider(params.provider as string, permalink)
       .then(() => setSaved(true))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   const remove = () => {
-    API.removeProvider(params.provider)
+    API.removeProvider(params.provider as string)
       .then(() => setSaved(true))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   if (saved) {
-    return <Redirect to="/account" />;
+    router.push('/account');
+    return null;
   }
   if (error && !provider) {
     return <p>{error}</p>;

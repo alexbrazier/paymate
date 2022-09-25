@@ -3,17 +3,18 @@ import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
 import { IRequest, IResponse } from '../../types';
 import APIError from '../helpers/APIError';
-import * as User from '../models/User';
+import User from '../models/User';
 import { sendMagicLinkEmail } from '../helpers/Mailer';
 import config from '../../config/env';
 
-const verifyJwt = util.promisify(jwt.verify);
+const verifyJwt = util.promisify(jwt.verify) as any;
 
 export async function login(req: IRequest, res: IResponse) {
   const { email } = req.body;
-  const user = await User.get(email);
+  const user = await User.findOne({ email });
   if (!user) {
-    await User.add({ email });
+    const u = new User({ email });
+    await u.save();
   }
 
   const token = jwt.sign(
@@ -38,7 +39,7 @@ export async function callback(req: IRequest, res: IResponse) {
     if (decoded.type !== 'login') {
       throw new Error('Invalid jwt type');
     }
-    const user = await User.get(decoded.email);
+    const user = await User.findOne({ email: decoded.email });
     const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 5; // 5 hours
     const authToken = jwt.sign(
       {

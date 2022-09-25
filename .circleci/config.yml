@@ -4,18 +4,17 @@ executors:
   default:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:10.16.0
-
-  browsers:
-    working_directory: ~/repo
-    docker:
-      - image: circleci/node:10.16.0-browsers
-      - image: circleci/mysql:5.7.17
-        environment:
-          MYSQL_ROOT_PASSWORD: Password123
-          MYSQL_DATABASE: paymate
-          MYSQL_USER: paymate
-          MYSQL_PASSWORD: Password123
+      - image: cimg/node:16.16.0
+  # browsers:
+  #   working_directory: ~/repo
+  #   docker:
+  #     - image: circleci/node:10.16.0-browsers
+  #     - image: circleci/mysql:5.7.17
+  #       environment:
+  #         MYSQL_ROOT_PASSWORD: Password123
+  #         MYSQL_DATABASE: paymate
+  #         MYSQL_USER: paymate
+  #         MYSQL_PASSWORD: Password123
 
 jobs:
   setup:
@@ -54,36 +53,36 @@ jobs:
           command: |
             yarn lint && echo -e "\033[0;32mESLint passed"
 
-  e2e-test:
-    executor: browsers
-    parallelism: 1
-    steps:
-      - attach_workspace:
-          at: ~/
-      - setup_remote_docker
-      - run:
-          name: E2E frontend background
-          command: cd frontend && yarn start
-          background: true
-      - run:
-          name: E2E api background
-          environment:
-            HOSTS: localhost
-          command: cd api && yarn build && yarn migrate && cd dist && node index
-          background: true
-      - run:
-          name: Waiting for mysql to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z localhost 3306 && echo Success && exit 0
-              echo -n .
-              sleep 1
-            done
-            echo Failed waiting for MySQL && exit 1
-      - run:
-          name: Run E2E tests
-          command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
+  # e2e-test:
+  #   executor: browsers
+  #   parallelism: 1
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/
+  #     - setup_remote_docker
+  #     - run:
+  #         name: E2E frontend background
+  #         command: cd frontend && yarn start
+  #         background: true
+  #     - run:
+  #         name: E2E api background
+  #         environment:
+  #           HOSTS: localhost
+  #         command: cd api && yarn build && cd dist && node index
+  #         background: true
+  #     # - run:
+  #     #     name: Waiting for mysql to be ready
+  #     #     command: |
+  #     #       for i in `seq 1 10`;
+  #     #       do
+  #     #         nc -z localhost 30210 && echo Success && exit 0
+  #     #         echo -n .
+  #     #         sleep 1
+  #     #       done
+  #     #       echo Failed waiting for MySQL && exit 1
+  #     - run:
+  #         name: Run E2E tests
+  #         command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
 
   build:
     executor: default
@@ -128,14 +127,14 @@ workflows:
       - build:
           requires:
             - setup
-      - e2e-test:
-          requires:
-            - setup
+      # - e2e-test:
+      #     requires:
+      #       - setup
       - publish:
           requires:
             - lint
             - build
-            - e2e-test
+            # - e2e-test
           filters:
             branches:
               only: master

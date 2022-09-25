@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { Redirect } from 'react-router-dom';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
 import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './NewProvider.module.scss';
+import { useRouter } from 'next/router';
 interface Props {
   match: any;
 }
@@ -15,20 +15,22 @@ const NewProvider: React.FC<Props> = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [saved, setSaved] = useState();
+  const router = useRouter();
   useEffect(() => {
     API.getAvailableProviders()
       .then(({ data }) => setProviders(data.providers))
-      .catch(err => setError(err.response.data.message))
+      .catch((err) => setError(err.response.data.message))
       .then(() => setLoading(false));
   }, []);
 
-  const addProvider = id => {
+  const addProvider = (id) => {
     API.addProvider(id)
       .then(() => setSaved(id))
-      .catch(err => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message));
   };
   if (saved) {
-    return <Redirect to={`/account/provider/${saved}`} />;
+    router.push(`/account/provider/${saved}`);
+    return null;
   }
   return (
     <Fragment>
@@ -56,13 +58,13 @@ const NewProvider: React.FC<Props> = () => {
           </>
         )}
         <div className={styles.providers}>
-          {providers.map(p => (
+          {providers.map((p) => (
             <Provider
               key={p.name}
               icon={p.icon}
               name={p.name}
               tabIndex={0}
-              onClick={() => addProvider(p.id)}
+              onClick={() => addProvider(p._id)}
             />
           ))}
         </div>

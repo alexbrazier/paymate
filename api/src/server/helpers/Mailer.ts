@@ -24,8 +24,8 @@ function sendEmail(mailOpts: SendMailOptions) {
     port: config.email.port,
   });
 
-  return new Promise(resolve => {
-    transporter.sendMail(mailOpts, err => {
+  return new Promise((resolve) => {
+    transporter.sendMail(mailOpts, (err) => {
       if (err) {
         console.log(err);
         throw new Error(

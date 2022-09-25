@@ -36,9 +36,8 @@ if (config.env === 'development') {
     expressWinston.logger({
       winstonInstance,
       meta: true, // optional: log meta data about request (defaults to true)
-      msg:
-        'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
-      colorStatus: true, // Color the status code (default green, 3XX cyan, 4XX yellow, 5XX red).
+      msg: 'HTTP {{req.method}} {{req.url}} {{res.statusCode}} {{res.responseTime}}ms',
+      colorize: true,
     })
   );
 }
@@ -54,27 +53,22 @@ app.get('*', (req, res) => {
 // if error is not an instanceOf APIError, convert it.
 app.use(
   (
-    err: expressValidation.ValidationError | APIError,
+    err: expressValidation.ValidationError | APIError | any,
     req: IRequest,
     res: IResponse,
     next: INextFunction
   ) => {
     if (err instanceof expressValidation.ValidationError) {
       // validation error contains errors which is an array of error each containing message[]
-      const unifiedErrorMessage = err.errors
-        .map(error => error.messages.join('. '))
+      const unifiedErrorMessage = (err as any).errors
+        ?.map((error: any) => error.messages.join('. '))
         .join(' and ');
-      const error = new APIError(unifiedErrorMessage, err.status, true);
+      const error = new APIError(unifiedErrorMessage, 400, true);
       return next(error);
     } else if (!(err instanceof APIError)) {
       const apiError = new APIError(err.message, err.status, err.isPublic);
       apiError.stack =
-        apiError.stack
-          .split('\n')
-          .slice(0, 2)
-          .join('\n') +
-        '\n' +
-        err.stack;
+        apiError.stack.split('\n').slice(0, 2).join('\n') + '\n' + err.stack;
       return next(apiError);
     }
     return next(err);
@@ -91,16 +85,17 @@ if (config.env !== 'test') {
 }
 
 // error handler, send stacktrace only during development
-app.use((
-  err: APIError,
-  req: IRequest,
-  res: IResponse,
-  next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
-) =>
-  res.status(err.status).json({
-    message: err.isPublic ? err.message : httpStatus[err.status],
-    stack: config.env === 'development' ? err.stack : {},
-  })
+app.use(
+  (
+    err: APIError,
+    req: IRequest,
+    res: IResponse,
+    next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
+  ) =>
+    res.status(err.status).json({
+      message: err.isPublic ? err.message : httpStatus[err.status],
+      stack: config.env === 'development' ? err.stack : {},
+    })
 );
 
 export default app;
