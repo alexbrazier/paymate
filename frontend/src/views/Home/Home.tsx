@@ -42,7 +42,16 @@ const Home: React.FC = () => {
             </ButtonLink>
           </>
         ) : (
-          <Register />
+          <>
+            <p>
+              Welcome to PayMate.me. You can use this site to register your own
+              page using any name you want and provide links so that friends can
+              pay you using their preferred method. The site currently supports
+              links from PayPal, Monzo, Starling and PingIt.
+            </p>
+            <p>Use the form below to register or login to your account.</p>
+            <Register />
+          </>
         )}
       </div>
     </section>

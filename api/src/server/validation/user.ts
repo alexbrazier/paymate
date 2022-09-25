@@ -2,17 +2,20 @@ import Joi from 'joi';
 
 export default {
   login: {
-    body: {
-      email: Joi.string().email().lowercase().required(),
-    },
+    body: Joi.object({
+      email: Joi.string()
+        .email()
+        .lowercase()
+        .required(),
+    }),
   },
   callback: {
-    query: {
+    query: Joi.object({
       token: Joi.string().required(),
-    },
+    }),
   },
   setUserDetails: {
-    body: {
+    body: Joi.object({
       permalink: Joi.string()
         .min(4)
         .max(30)
@@ -41,18 +44,27 @@ export default {
           'translate'
         )
         .required(),
-      name: Joi.string().min(1).max(80).required(),
-    },
+      name: Joi.string()
+        .min(1)
+        .max(80)
+        .required(),
+    }),
   },
   saveProvider: {
-    body: {
-      permalink: Joi.string().lowercase().required(),
-    },
+    body: Joi.object({
+      permalink: Joi.string()
+        .lowercase()
+        .required(),
+    }),
   },
   updateOrder: {
-    body: {
-      oldIndex: Joi.number().min(0).required(),
-      newIndex: Joi.number().min(0).required(),
-    },
+    body: Joi.object({
+      oldIndex: Joi.number()
+        .min(0)
+        .required(),
+      newIndex: Joi.number()
+        .min(0)
+        .required(),
+    }),
   },
 };

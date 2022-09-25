@@ -49,7 +49,7 @@ const Register: React.FC = () => {
     dispatch({ type: actions.LOGIN });
     API.login(email)
       .then(() => dispatch({ type: actions.LOGIN_SUCCESS }))
-      .catch((err) =>
+      .catch(err =>
         dispatch({ type: actions.LOGIN_FAILURE, payload: err.message })
       );
   };
@@ -65,6 +65,7 @@ const Register: React.FC = () => {
   }
   return (
     <form onSubmit={submit}>
+      <h2>Login/Register</h2>
       <p>
         Enter your email below to setup or modify your personal payment page.
       </p>
