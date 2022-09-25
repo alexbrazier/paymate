@@ -52,7 +52,7 @@ const Provider: React.FC<Props> = ({
       {...props}
     >
       <img
-        src={`/static/providers/${icon}.jpg`}
+        src={`/providers/${icon}.jpg`}
         className={styles.provider}
         alt={name}
       />

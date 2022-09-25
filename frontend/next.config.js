@@ -4,7 +4,8 @@
  * @type {import('next/dist/server/config').NextConfig}
  **/
 const config = {
-  cssModules: true,
+  output: 'standalone',
+  poweredByHeader: false,
 };
 
 module.exports = config;

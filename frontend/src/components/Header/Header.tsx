@@ -41,7 +41,7 @@ const Header: React.FC<Props> = () => {
     <header className={styles.header}>
       <Link href="/">
         <a className={cn(styles.userButton, styles.logoButton)}>
-          <img className={styles.logo} src="/static/logo.png" alt="" />
+          <img className={styles.logo} src="/logo.png" alt="" />
           PayMate
         </a>
       </Link>
