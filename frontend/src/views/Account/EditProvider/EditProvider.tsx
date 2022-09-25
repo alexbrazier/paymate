@@ -13,7 +13,7 @@ interface Props {}
 
 const EditProvider: React.FC<Props> = () => {
   usePageTitle('Edit Provider');
-  const [provider, setProvider] = useState();
+  const [provider, setProvider] = useState<any>();
   const [permalink, setPermalink] = useState('');
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState();

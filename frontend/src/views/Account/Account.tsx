@@ -14,7 +14,7 @@ const SortableProvider: any = SortableElement((props: any) => (
   </li>
 ));
 
-const SortableList = SortableContainer(({ items }) => (
+const SortableList = SortableContainer(({ items }: any) => (
   <ul className={styles.items}>
     {items.map((provider, index) => (
       <SortableProvider
@@ -30,7 +30,7 @@ const SortableList = SortableContainer(({ items }) => (
 
 const Account = () => {
   usePageTitle('Account');
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [error, setError] = useState();
   useEffect(() => {
     API.accountDetails()
@@ -71,6 +71,7 @@ const Account = () => {
       </p>
       {
         <SortableList
+          // @ts-ignore
           items={user.providers}
           axis="xy"
           pressDelay={100}

@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 interface Props {}
 
 const Header: React.FC<Props> = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [showMenu, setShowMenu] = useState(false);
   const hideMenu = useCallback(() => setShowMenu(false), [setShowMenu]);
   const ref = useClickOutside(hideMenu, !showMenu);

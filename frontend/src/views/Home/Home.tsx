@@ -6,7 +6,7 @@ import Register from './Register/Register';
 import Loading from '../../components/Loading';
 
 const Home: React.FC = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<any>();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!localStorage.getItem('token')) {
