@@ -1,6 +1,6 @@
 import express from 'express';
-import expressJwt from 'express-jwt';
-import validate from 'express-validation';
+import { expressjwt } from 'express-jwt';
+import { validate } from 'express-validation';
 import * as userCtrl from '../controllers/user';
 import config from '../../config/env';
 import asyncMiddleware from '../middleware/async';
@@ -8,46 +8,37 @@ import userValidation from '../validation/user';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
+const requireAuth = expressjwt({
+  secret: config.jwtSecret,
+  algorithms: ['HS256'],
+  requestProperty: 'user',
+});
+
 router
   .route('/')
-  .get(
-    expressJwt({ secret: config.jwtSecret }),
-    asyncMiddleware(userCtrl.getUser)
-  )
+  .get(requireAuth, asyncMiddleware(userCtrl.getUser))
   .post(
-    expressJwt({ secret: config.jwtSecret }),
+    requireAuth,
     validate(userValidation.setUserDetails),
     asyncMiddleware(userCtrl.setUserDetails)
   );
 router
   .route('/available-providers')
-  .get(
-    expressJwt({ secret: config.jwtSecret }),
-    asyncMiddleware(userCtrl.getAvailableProviders)
-  );
+  .get(requireAuth, asyncMiddleware(userCtrl.getAvailableProviders));
 router
   .route('/provider/:provider')
-  .get(
-    expressJwt({ secret: config.jwtSecret }),
-    asyncMiddleware(userCtrl.getProvider)
-  )
-  .delete(
-    expressJwt({ secret: config.jwtSecret }),
-    asyncMiddleware(userCtrl.removeProvider)
-  )
-  .post(
-    expressJwt({ secret: config.jwtSecret }),
-    asyncMiddleware(userCtrl.addProvider)
-  )
+  .get(requireAuth, asyncMiddleware(userCtrl.getProvider))
+  .delete(requireAuth, asyncMiddleware(userCtrl.removeProvider))
+  .post(requireAuth, asyncMiddleware(userCtrl.addProvider))
   .put(
-    expressJwt({ secret: config.jwtSecret }),
+    requireAuth,
     validate(userValidation.saveProvider),
     asyncMiddleware(userCtrl.saveProvider)
   );
 router
   .route('/provider/:provider/order')
   .put(
-    expressJwt({ secret: config.jwtSecret }),
+    requireAuth,
     validate(userValidation.updateOrder),
     asyncMiddleware(userCtrl.updateProviderOrder)
   );
