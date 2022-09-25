@@ -19,7 +19,7 @@ const getConfig = () => {
 
 const config = getConfig();
 
-interface IConfig {
+export interface IConfig {
   root: string;
   db: {
     host: string;
@@ -43,7 +43,8 @@ interface IConfig {
   };
 }
 
-const defaults = {
+const defaults: IConfig = {
+  env: 'development',
   root: path.join(__dirname, '/..'),
   port: 8000,
   db: {
