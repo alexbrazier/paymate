@@ -1,12 +1,12 @@
 import util from 'util';
 import jwt from 'jsonwebtoken';
 import httpStatus from 'http-status';
-import { IRequest, IResponse } from '../../types';
-import APIError from '../helpers/APIError';
-import User from '../models/User';
-import { sendMagicLinkEmail } from '../helpers/Mailer';
+import APIError from '../../helpers/APIError';
+import User from '../../models/User';
+import { sendMagicLinkEmail } from '../../helpers/Mailer';
 import config from '../../config/env';
 import { RequestHandler } from 'express';
+import logger from '../../config/winston';
 
 const verifyJwt = util.promisify(jwt.verify) as any;
 
@@ -21,10 +21,9 @@ const signJwt = (id: string, email: string) => {
   const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 5; // 5 hours
   const token = jwt.sign(
     {
-      id: id,
-      email: email,
+      id,
+      email,
       exp,
-      type: 'auth',
     },
     config.jwtSecret
   );
@@ -64,37 +63,34 @@ export const check: RequestHandler = async (req, res) => {
   }
 };
 
-export async function login(req: IRequest, res: IResponse) {
+export const login: RequestHandler = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
+  let u: any;
   if (!user) {
-    const u = new User({ email });
+    u = new User({ email });
     await u.save();
   }
 
   const token = jwt.sign(
     {
-      email,
+      id: (user || u).id,
       exp: Math.floor(Date.now() / 1000) + 60 * 10, // 10 minutes
-      type: 'login',
     },
-    config.jwtSecret
+    config.jwtSecretEmail
   );
 
   const link = `${config.host}/account/login?token=${token}`;
 
   sendMagicLinkEmail({ link, email });
   res.json({ success: true });
-}
+};
 
-export async function callback(req: IRequest, res: IResponse) {
+export const callback: RequestHandler = async (req, res) => {
   const { token, password } = req.body;
   try {
-    const decoded: any = await verifyJwt(token, config.jwtSecret);
-    if (decoded.type !== 'login') {
-      throw new Error('Invalid jwt type');
-    }
-    const user = await User.findOne({ email: decoded.email }).select('+email');
+    const decoded: any = await verifyJwt(token, config.jwtSecretEmail);
+    const user = await User.findOne({ _id: decoded.id }).select('+email');
 
     if (!user) {
       throw new Error('User not found');
@@ -109,10 +105,11 @@ export async function callback(req: IRequest, res: IResponse) {
 
     res.json(result);
   } catch (err) {
+    logger.error(err);
     throw new APIError(
       'Your token is either invalid or has expired',
       httpStatus.UNAUTHORIZED,
       true
     );
   }
-}
+};

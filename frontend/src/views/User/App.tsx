@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Container, Alert, Button } from '@mui/material';
+import { Container, Alert, Button, Typography } from '@mui/material';
 import * as API from '../../api';
 import styles from './App.module.scss';
 import Provider from '../../components/Provider';
@@ -59,6 +59,9 @@ function App({ user: initialUser, amount, error: initialError }) {
         {user.providers.map((provider) => (
           <Provider key={provider.name} {...provider} amount={amount} />
         ))}
+        {user.providers.length === 0 && (
+          <Typography>This page has not been set up yet.</Typography>
+        )}
       </section>
     </div>
   );

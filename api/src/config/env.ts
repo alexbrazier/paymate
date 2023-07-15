@@ -22,6 +22,7 @@ export interface IConfig {
     points: number;
     duration: number;
   };
+  jwtSecretEmail: string;
 }
 
 const config: IConfig = {
@@ -35,6 +36,8 @@ const config: IConfig = {
     db: process.env.DB_DB || 'paymate',
   },
   jwtSecret: process.env.JWT_SECRET,
+  jwtSecretEmail:
+    process.env.JWT_SECRET_EMAIL || `${process.env.JWT_SECRET}email`,
   host: process.env.HOST || 'http://localhost:3000',
   rateLimit: {
     points: Number(process.env.RATE_LIMIT_POINTS) || 20,
