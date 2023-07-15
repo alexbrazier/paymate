@@ -1,3 +1,4 @@
+import './config/dotenv';
 import config from './config/env';
 import app from './config/express';
 import logger from './config/winston';
