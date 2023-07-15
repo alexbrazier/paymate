@@ -11,10 +11,22 @@ const darkTheme = createTheme({
     primary: {
       main: '#ea4442',
     },
+    secondary: {
+      main: '#42E8EA',
+    },
   },
   typography: {
     button: {
       textTransform: 'none',
+    },
+    h1: {
+      fontSize: '2.5rem',
+    },
+    h2: {
+      fontSize: '2rem',
+    },
+    h3: {
+      fontSize: '1.75rem',
     },
   },
 });
@@ -35,7 +47,7 @@ const App = ({ Component, pageProps }) => {
             display: 'flex',
             flexDirection: 'column',
             margin: 15,
-            width: '90%',
+            width: '100%',
             alignItems: 'center',
           }}
         >

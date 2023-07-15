@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Container, Alert, Button } from '@mui/material';
 import * as API from '../../api';
 import styles from './App.module.scss';
 import Provider from '../../components/Provider';
 import Loading from '../../components/Loading';
 import { GetServerSideProps } from 'next';
 import PageTitle from '../../components/PageTitle';
+import Link from '../../components/Link';
 
 function App({ user: initialUser, amount, error: initialError }) {
   const {
@@ -24,7 +26,26 @@ function App({ user: initialUser, amount, error: initialError }) {
   }, [permalink]);
 
   if (error) {
-    return <div className={styles.App}>{error}</div>;
+    return (
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <Alert severity="error">{error}</Alert>
+        <Button
+          LinkComponent={Link}
+          href="/"
+          variant="contained"
+          sx={{ mt: 2 }}
+        >
+          Go back
+        </Button>
+      </Container>
+    );
   }
   if (!user) {
     return <Loading />;
@@ -46,7 +67,7 @@ function App({ user: initialUser, amount, error: initialError }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { data } = await API.getUser(context.params.permalink as string);
-    return { props: { user: data, amount: context.params.amount } };
+    return { props: { user: data, amount: context.params.amount || null } };
   } catch (err) {
     return { props: { error: err.response.data.message } };
   }
