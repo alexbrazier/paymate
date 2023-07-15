@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from '../server/models/User';
-import APIError from '../server/helpers/APIError';
+import User from '../models/User';
+import APIError from '../helpers/APIError';
 
 passport.use(
   new LocalStrategy(

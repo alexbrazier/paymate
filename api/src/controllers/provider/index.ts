@@ -1,6 +1,6 @@
 import express from 'express';
-import * as provider from '../controllers/provider';
-import asyncMiddleware from '../middleware/async';
+import * as provider from './provider';
+import asyncMiddleware from '../../middleware/async';
 
 const router = express.Router(); // eslint-disable-line new-cap
 

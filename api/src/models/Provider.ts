@@ -1,5 +1,5 @@
 import { Schema, Document } from 'mongoose';
-import { model } from '../../config/db';
+import { model } from '../config/db';
 export interface IProvider {
   name: string;
   icon: string;

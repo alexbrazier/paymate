@@ -1,10 +1,10 @@
 import express from 'express';
 import { expressjwt } from 'express-jwt';
 import { validate } from 'express-validation';
-import * as userCtrl from '../controllers/user';
+import * as userCtrl from './user';
 import config from '../../config/env';
-import asyncMiddleware from '../middleware/async';
-import userValidation from '../validation/user';
+import asyncMiddleware from '../../middleware/async';
+import userValidation from './validation';
 
 const router = express.Router(); // eslint-disable-line new-cap
 

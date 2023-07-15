@@ -96,16 +96,15 @@ const AuthForm = () => {
               </Button>
             )}
           </Box>
-          {emailEntered && (
-            <TextField
-              name="password"
-              type="password"
-              sx={{ my: 1 }}
-              label="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          )}
+          <TextField
+            name="password"
+            type="password"
+            // Allow password managers to fill in one go
+            sx={{ my: 1, ...(!emailEntered && { display: 'none' }) }}
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Button
             type="submit"
             variant="contained"

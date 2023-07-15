@@ -1,6 +1,6 @@
 import { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { model } from '../../config/db';
+import { model } from '../config/db';
 
 export interface IUser {
   name: string;
@@ -20,7 +20,13 @@ export interface IUserModel extends IUser, Document {}
 const UserSchema = new Schema<IUser>(
   {
     name: { type: String },
-    permalink: { type: String, lowercase: true, trim: true, unique: true },
+    permalink: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      unique: true,
+      sparse: true,
+    },
     email: {
       type: String,
       select: false,
@@ -39,6 +45,7 @@ const UserSchema = new Schema<IUser>(
           permalink: { type: String },
         },
       ],
+      default: [],
     },
   },
   { timestamps: true }

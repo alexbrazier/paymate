@@ -1,9 +1,9 @@
 import express from 'express';
 import { validate } from 'express-validation';
 import passport from 'passport';
-import userValidation from '../validation/user';
-import * as auth from '../controllers/auth';
-import asyncMiddleware from '../middleware/async';
+import userValidation from '../user/validation';
+import * as auth from './auth';
+import asyncMiddleware from '../../middleware/async';
 
 const router = express.Router(); // eslint-disable-line new-cap
 

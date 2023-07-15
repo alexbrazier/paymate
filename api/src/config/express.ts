@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -8,11 +8,10 @@ import expressWinston from 'express-winston';
 import expressValidation from 'express-validation';
 import helmet from 'helmet';
 import winstonInstance from './winston';
-import routes from '../server/routes';
+import routes from '../controllers';
 import config from './env';
-import APIError from '../server/helpers/APIError';
-import { IRequest, IResponse, INextFunction } from '../types';
-import rateLimiterMiddleware from '../server/middleware/rateLimiter';
+import APIError from '../helpers/APIError';
+import rateLimiterMiddleware from '../middleware/rateLimiter';
 import './passport';
 
 const app = express();
@@ -55,15 +54,16 @@ app.get('*', (req, res) => {
 app.use(
   (
     err: expressValidation.ValidationError | APIError | any,
-    req: IRequest,
-    res: IResponse,
-    next: INextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
   ) => {
     if (err instanceof expressValidation.ValidationError) {
       // validation error contains errors which is an array of error each containing message[]
       const unifiedErrorMessage = (err as any).errors
         ?.map((error: any) => error.messages.join('. '))
         .join(' and ');
+
       const error = new APIError(unifiedErrorMessage, 400, true);
       return next(error);
     } else if (!(err instanceof APIError)) {
@@ -89,9 +89,9 @@ if (config.env !== 'test') {
 app.use(
   (
     err: APIError,
-    req: IRequest,
-    res: IResponse,
-    next: INextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
+    req: Request,
+    res: Response,
+    next: NextFunction // eslint-disable-line @typescript-eslint/no-unused-vars
   ) =>
     res.status(err.status).json({
       message: err.isPublic ? err.message : httpStatus[err.status],

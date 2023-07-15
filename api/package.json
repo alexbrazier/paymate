@@ -6,7 +6,7 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "nodemon --watch src --ext ts --exec yarn start:once",
+    "start": "nodemon --transpile-only src/index.ts",
     "start:once": "node -r ts-node/register src/index.ts",
     "start:prod": "node index",
     "build": "rimraf dist && tsc",

@@ -1,6 +1,6 @@
 import nodemailer, { SendMailOptions } from 'nodemailer';
-import config from '../../config/env';
-import logger from '../../config/winston';
+import config from '../config/env';
+import logger from '../config/winston';
 import magicLinkEmail from './magicLinkEmail';
 
 const FROM = 'PayMate <noreply@paymate.me>';

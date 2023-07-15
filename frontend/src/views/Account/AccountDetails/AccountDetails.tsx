@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Button, TextField, Typography, Container } from '@mui/material';
+import { Button, TextField, Typography, Container, Alert } from '@mui/material';
 import styles from './AccountDetails.module.scss';
 import * as API from '../../../api';
 import Loading from '../../../components/Loading';
@@ -66,7 +66,11 @@ const Setup: React.FC<Props> = ({ edit }) => {
           style={{ display: 'flex', flexDirection: 'column' }}
         >
           <h1>{edit ? 'Edit Details' : 'Create PayMate Page'}</h1>
-          {error && <p>{error}</p>}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
           {!edit && <p>Pick a username for people to use to send you money</p>}
           <TextField
             label="Name"

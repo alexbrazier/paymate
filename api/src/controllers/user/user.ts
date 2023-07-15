@@ -1,8 +1,17 @@
 import httpStatus from 'http-status';
-import { IRequest, IResponse } from '../../types';
-import User from '../models/User';
-import Provider from '../models/Provider';
-import APIError from '../helpers/APIError';
+import { Request, RequestHandler } from 'express';
+import User from '../../models/User';
+import Provider from '../../models/Provider';
+import APIError from '../../helpers/APIError';
+
+const getDbUser = async (req: Request, extra?: any) => {
+  const user = await User.findOne({ _id: req.user.id, ...extra });
+  if (!user) {
+    throw new APIError('User not found', httpStatus.NOT_FOUND, true);
+  }
+
+  return user;
+};
 
 const getUserDetails = async ({ query, isPublic = true }: any) => {
   const user = await User.findOne(query)
@@ -17,53 +26,61 @@ const getUserDetails = async ({ query, isPublic = true }: any) => {
     name: user.name,
     permalink: user.permalink,
     email: user.email,
-    providers: user.providers
-      .filter((provider) => !isPublic || !!provider.permalink)
-      .map((provider) => ({
-        ...provider.provider,
-        permalink: provider.permalink,
-      })),
+    providers:
+      user.providers
+        ?.filter((provider) => !isPublic || !!provider.permalink)
+        .map((provider) => ({
+          ...provider.provider,
+          permalink: provider.permalink,
+        })) || [],
   };
 
   return result;
 };
 
-export async function getProviders(req: IRequest, res: IResponse) {
+export const getProviders: RequestHandler = async (req, res) => {
   const result = await getUserDetails({
     query: { permalink: req.params.permalink },
   });
 
   res.json(result);
-}
+};
 
-export async function getUser(req: IRequest, res: IResponse) {
+export const getUser: RequestHandler = async (req, res) => {
   const result = await getUserDetails({
-    query: { email: req.user.email },
+    query: { _id: req.user.id },
     isPublic: false,
   });
 
   res.json(result);
-}
+};
 
-export async function setUserDetails(req: IRequest, res: IResponse) {
+export const setUserDetails: RequestHandler = async (req, res) => {
   const { permalink, name } = req.body;
-  const user = await User.updateOne(
-    { email: req.user.email },
-    { permalink, name }
-  );
-  res.json(user);
-}
+  try {
+    await User.updateOne({ _id: req.user.id }, { permalink, name });
+  } catch (err) {
+    throw new APIError(
+      'Url already in use. Please try another.',
+      httpStatus.BAD_REQUEST,
+      true
+    );
+  }
+  res.json({
+    success: true,
+  });
+};
 
-export async function getAvailableProviders(req: IRequest, res: IResponse) {
-  const user = await User.findOne({ email: req.user.email });
+export const getAvailableProviders: RequestHandler = async (req, res) => {
+  const user = await getDbUser(req);
   const providers = await Provider.find({ _id: { $nin: user.providers } });
 
   res.json({ providers });
-}
+};
 
-export async function getProvider(req: IRequest, res: IResponse, next) {
+export const getProvider: RequestHandler = async (req, res, next) => {
   const user = await User.findOne({
-    email: req.user.email,
+    _id: req.user.id,
     'providers.provider': req.params.provider,
   }).populate<{ providers: any[] }>('providers.provider');
 
@@ -84,30 +101,23 @@ export async function getProvider(req: IRequest, res: IResponse, next) {
       url: provider.url,
     },
   });
-}
+};
 
-export async function saveProvider(req: IRequest, res: IResponse, next) {
-  const user = await User.findOne({
-    email: req.user.email,
+export const saveProvider: RequestHandler = async (req, res) => {
+  const user = await getDbUser(req, {
     'providers.provider': req.params.provider,
   });
 
-  if (!user) {
-    return next(new APIError('User not found', httpStatus.NOT_FOUND, true));
-  }
   user.providers.find(
     (p) => p.provider.toString() === req.params.provider
   ).permalink = req.body.permalink;
   await user.save();
 
   res.json({ success: true });
-}
-export async function addProvider(req: IRequest, res: IResponse, next) {
-  const user = await User.findOne({ email: req.user.email });
+};
 
-  if (!user) {
-    return next(new APIError('User not found', httpStatus.NOT_FOUND, true));
-  }
+export const addProvider: RequestHandler = async (req, res) => {
+  const user = await getDbUser(req);
 
   if (!user.providers.find((p) => p.provider === req.params.provider)) {
     user.providers.push({ provider: req.params.provider });
@@ -115,29 +125,21 @@ export async function addProvider(req: IRequest, res: IResponse, next) {
   }
 
   res.json({ success: true });
-}
+};
 
-export async function removeProvider(req: IRequest, res: IResponse, next) {
-  const user = await User.findOne({ email: req.user.email });
-
-  if (!user) {
-    return next(new APIError('User not found', httpStatus.NOT_FOUND, true));
-  }
+export const removeProvider: RequestHandler = async (req, res) => {
+  await getDbUser(req);
 
   await User.updateOne(
-    { email: req.user.email },
+    { _id: req.user.id },
     { $pull: { providers: { provider: req.params.provider } } }
   );
 
   res.json({ success: true });
-}
+};
 
-export async function updateProviderOrder(req: IRequest, res: IResponse) {
-  const user = await User.findOne({ email: req.user.email });
-
-  if (!user) {
-    throw new APIError('User not found', httpStatus.NOT_FOUND, true);
-  }
+export const updateProviderOrder: RequestHandler = async (req, res) => {
+  const user = await getDbUser(req);
 
   const { oldIndex, newIndex } = req.body;
 
@@ -153,4 +155,4 @@ export async function updateProviderOrder(req: IRequest, res: IResponse) {
   await user.save();
 
   res.json({ success: true });
-}
+};
