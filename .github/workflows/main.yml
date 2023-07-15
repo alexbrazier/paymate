@@ -48,14 +48,15 @@ jobs:
         run: |
           yarn lint && echo -e "\033[0;32mESLint passed"
 
-      - name: Docker login
-        run: |
-          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
-
       - name: Build
         run: |
           yarn build:docker
           docker images
+
+      - name: Docker login
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
 
       - name: Publish Docker
         if: github.ref == 'refs/heads/master'
