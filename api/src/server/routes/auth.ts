@@ -14,14 +14,12 @@ router
   .route('/callback')
   .post(validate(userValidation.callback), asyncMiddleware(auth.callback));
 
-router.route('/login2').post(asyncMiddleware(auth.login2));
-
 router.post(
   '/login/password',
   passport.authenticate('local', {
     session: false,
   }),
-  asyncMiddleware(auth.login2)
+  asyncMiddleware(auth.passwordLoginCallback)
 );
 
 router.post(

@@ -5,6 +5,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
 import styles from './NewProvider.module.scss';
 import { useRouter } from 'next/router';
+import PageTitle from '../../../components/PageTitle';
 interface Props {
   match: any;
 }

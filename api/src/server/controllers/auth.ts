@@ -10,7 +10,7 @@ import { RequestHandler } from 'express';
 
 const verifyJwt = util.promisify(jwt.verify) as any;
 
-export const login2: RequestHandler = async (req, res) => {
+export const passwordLoginCallback: RequestHandler = async (req, res) => {
   const user = req.user as any;
   const result = signJwt(user.id, user.email);
 
