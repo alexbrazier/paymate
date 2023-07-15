@@ -26,9 +26,8 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/frontend/.next/cache
-          key: ${{ runner.os }}-next-js-${{ hashFiles('frontend/src/images/**') }}-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-next-js-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-next-js-${{ hashFiles('frontend/src/images/**') }}-
             ${{ runner.os }}-next-js-
 
       - name: Install Node
