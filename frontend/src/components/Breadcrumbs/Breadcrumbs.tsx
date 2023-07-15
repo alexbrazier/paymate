@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
-import Link from 'next/link';
 import styles from './Breadcrumbs.module.scss';
+import Link from '../Link';
 
 interface Breadcrumb {
   path: string;
@@ -18,9 +18,7 @@ const Breadcrumbs: React.FC<Props> = ({ breadcrumbs, currentPage }) => {
     <ul className={styles.breadcrumbs}>
       {breadcrumbs.map(({ path, name }) => (
         <li className={styles.item} key="path">
-          <Link href={path}>
-            <a className={styles.link}>{name}</a>
-          </Link>
+          <Link href={path}>{name}</Link>
         </li>
       ))}
       <li className={cn(styles.item, styles.currentPage)}>{currentPage}</li>

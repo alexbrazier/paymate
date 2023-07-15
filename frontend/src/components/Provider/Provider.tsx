@@ -28,7 +28,7 @@ const getUrl = (url: string, permalink: string, amount?: string) => {
 };
 
 const CustomLink = ({ to, children, ...props }) => (
-  <Link href={to}>
+  <Link href={to} legacyBehavior>
     <a {...props}>{children}</a>
   </Link>
 );
