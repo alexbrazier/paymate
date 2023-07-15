@@ -3,6 +3,7 @@ import styles from '../Home.module.scss';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import * as API from '../../../api';
+import AuthForm from '../../../components/AuthForm';
 
 interface State {
   loading: boolean;
@@ -66,6 +67,7 @@ const Register: React.FC = () => {
   return (
     <form onSubmit={submit}>
       <h2>Login/Register</h2>
+      <AuthForm />
       <p>
         Enter your email below to setup or modify your personal payment page.
       </p>

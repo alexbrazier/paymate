@@ -55,4 +55,10 @@ export default {
       newIndex: Joi.number().min(0).required(),
     }),
   },
+  register: {
+    body: Joi.object({
+      email: Joi.string().email().lowercase().required(),
+      password: Joi.string().min(8).required(),
+    }),
+  },
 };

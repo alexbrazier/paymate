@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Home.module.scss';
+import { Button } from '@mui/material';
 import { ButtonLink } from '../../components/Button';
 import * as API from '../../api';
-import Register from './Register/Register';
 import Loading from '../../components/Loading';
+import Link from '../../components/Link';
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<any>();
@@ -49,8 +50,15 @@ const Home: React.FC = () => {
               pay you using their preferred method. The site currently supports
               links from PayPal, Monzo, Starling and PingIt.
             </p>
-            <p>Use the form below to register or login to your account.</p>
-            <Register />
+            <Button
+              variant="contained"
+              size="large"
+              href="/login"
+              fullWidth
+              LinkComponent={Link}
+            >
+              Login or Register
+            </Button>
           </>
         )}
       </div>

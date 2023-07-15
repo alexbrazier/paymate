@@ -5,7 +5,7 @@ const apiUrl =
     ? process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://localhost:8000/api'
     : '/api';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: apiUrl,
 });
 

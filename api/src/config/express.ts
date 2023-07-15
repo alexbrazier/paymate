@@ -13,6 +13,7 @@ import config from './env';
 import APIError from '../server/helpers/APIError';
 import { IRequest, IResponse, INextFunction } from '../types';
 import rateLimiterMiddleware from '../server/middleware/rateLimiter';
+import './passport';
 
 const app = express();
 
