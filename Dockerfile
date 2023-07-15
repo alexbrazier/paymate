@@ -14,7 +14,7 @@ RUN yarn install --production --frozen-lockfile
 COPY api/dist api
 COPY frontend/next.config.js frontend/
 COPY frontend/public frontend/public
-COPY frontend/.next/standalone frontend/
+COPY frontend/.next/standalone/frontend frontend/
 COPY frontend/.next/static frontend/.next/static
 
 EXPOSE 3000
