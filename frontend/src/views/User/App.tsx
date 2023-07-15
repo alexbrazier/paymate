@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Container, Alert, Button } from '@mui/material';
 import * as API from '../../api';
 import styles from './App.module.scss';
 import Provider from '../../components/Provider';
 import Loading from '../../components/Loading';
-import usePageTitle from '../../hooks/usePageTitle';
-import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import PageTitle from '../../components/PageTitle';
+import Link from '../../components/Link';
 
-function App({ user: initialUser, error: initialError }) {
+function App({ user: initialUser, amount, error: initialError }) {
   const {
-    query: { permalink, amount },
+    query: { permalink },
   } = useRouter();
+
   const [user, setUser] = useState(initialUser);
   const [error, setError] = useState(initialError);
   useEffect(() => {
@@ -23,10 +25,27 @@ function App({ user: initialUser, error: initialError }) {
       .catch((err) => setError(err.response.data.message));
   }, [permalink]);
 
-  usePageTitle(user ? `Pay ${user.name}` : undefined);
-
   if (error) {
-    return <div className={styles.App}>{error}</div>;
+    return (
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <Alert severity="error">{error}</Alert>
+        <Button
+          LinkComponent={Link}
+          href="/"
+          variant="contained"
+          sx={{ mt: 2 }}
+        >
+          Go back
+        </Button>
+      </Container>
+    );
   }
   if (!user) {
     return <Loading />;
@@ -34,9 +53,7 @@ function App({ user: initialUser, error: initialError }) {
 
   return (
     <div className={styles.App}>
-      <Head>
-        <title>PayMate - Pay {user.name}</title>
-      </Head>
+      {user.name && <PageTitle title={`Pay ${user.name}`} />}
       <section>
         <h1 className={styles.title}>Pay {user.name}</h1>
         {user.providers.map((provider) => (
@@ -50,7 +67,7 @@ function App({ user: initialUser, error: initialError }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { data } = await API.getUser(context.params.permalink as string);
-    return { props: { user: data } };
+    return { props: { user: data, amount: context.params.amount || null } };
   } catch (err) {
     return { props: { error: err.response.data.message } };
   }

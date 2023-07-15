@@ -3,14 +3,13 @@ import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
-import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './NewProvider.module.scss';
 import { useRouter } from 'next/router';
+import PageTitle from '../../../components/PageTitle';
 interface Props {
   match: any;
 }
 const NewProvider: React.FC<Props> = () => {
-  usePageTitle('Add Provider');
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
@@ -34,6 +33,7 @@ const NewProvider: React.FC<Props> = () => {
   }
   return (
     <Fragment>
+      <PageTitle title="Add Provider" />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
         currentPage="Add Provider"

@@ -7,7 +7,7 @@
     "dev": "next",
     "start": "yarn dev",
     "start:prod": "next start",
-    "build": "next build",
+    "build": "BUILD_API_URL=https://paymate.me/api next build",
     "test": "jest",
     "test:e2e": "cypress run",
     "test:e2e:local": "cypress open",
@@ -34,6 +34,10 @@
     ]
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.0",
+    "@mui/material": "^5.14.0",
     "axios": "^0.27.2",
     "classnames": "^2.3.2",
     "http-proxy-middleware": "^2.0.6",

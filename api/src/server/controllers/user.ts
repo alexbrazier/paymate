@@ -6,6 +6,7 @@ import APIError from '../helpers/APIError';
 
 const getUserDetails = async ({ query, isPublic = true }: any) => {
   const user = await User.findOne(query)
+    .select('+email')
     .populate<{ providers: any }>('providers.provider')
     .lean();
   if (!user) {
@@ -15,6 +16,7 @@ const getUserDetails = async ({ query, isPublic = true }: any) => {
   const result = {
     name: user.name,
     permalink: user.permalink,
+    email: user.email,
     providers: user.providers
       .filter((provider) => !isPublic || !!provider.permalink)
       .map((provider) => ({

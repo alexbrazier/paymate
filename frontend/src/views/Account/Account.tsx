@@ -5,8 +5,8 @@ import Provider from '../../components/Provider';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ButtonLink } from '../../components/Button';
 import Loading from '../../components/Loading';
-import usePageTitle from '../../hooks/usePageTitle';
 import styles from './Account.module.scss';
+import PageTitle from '../../components/PageTitle';
 
 const SortableProvider: any = SortableElement((props: any) => (
   <li tabIndex={0}>
@@ -29,7 +29,6 @@ const SortableList = SortableContainer(({ items }: any) => (
 ));
 
 const Account = () => {
-  usePageTitle('Account');
   const [user, setUser] = useState<any>();
   const [error, setError] = useState();
   useEffect(() => {
@@ -64,6 +63,7 @@ const Account = () => {
   }
   return (
     <div>
+      <PageTitle title="Account" />
       <h1>Account</h1>
       <p>
         Select a provider to edit details or remove, click the add button to add

@@ -2,10 +2,12 @@ import axios from 'axios';
 
 const apiUrl =
   typeof window === 'undefined'
-    ? process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://localhost:8000/api'
+    ? process.env.BUILD_API_URL ||
+      process.env.NEXT_PUBLIC_SERVER_API_URL ||
+      'http://localhost:8000/api'
     : '/api';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: apiUrl,
 });
 
@@ -19,8 +21,8 @@ export const getUser = (permalink: string) => api.get(`/user/${permalink}`);
 
 export const login = (email: string) => api.post('/auth/login', { email });
 
-export const verifyToken = (token: string) =>
-  api.get('/auth/callback', { params: { token } });
+export const verifyToken = (token: string, password?: string) =>
+  api.post('/auth/callback', { token, password });
 
 export const accountDetails = () => {
   return axios.get('/api/user', {

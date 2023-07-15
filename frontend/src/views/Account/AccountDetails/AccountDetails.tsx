@@ -1,21 +1,22 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useRouter } from 'next/router';
+import { Button, TextField, Typography } from '@mui/material';
 import styles from './AccountDetails.module.scss';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
 import * as API from '../../../api';
 import Loading from '../../../components/Loading';
 import Breadcrumbs from '../../../components/Breadcrumbs';
-import usePageTitle from '../../../hooks/usePageTitle';
+import { api } from '../../../api';
+import PageTitle from '../../../components/PageTitle';
 
 interface Props {
   edit: boolean;
 }
 
 const Setup: React.FC<Props> = ({ edit }) => {
-  usePageTitle('Account Details');
   const [name, setName] = useState('');
   const [permalink, setPermalink] = useState('');
+  const [email, setEmail] = useState('');
+  const [changePasswordSet, setChangePasswordSet] = useState(false);
   const [loading, setLoading] = useState(true);
   const [registered, setRegistered] = useState(false);
   const [error, setError] = useState();
@@ -25,6 +26,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
       .then(({ data }) => {
         setName(data.name);
         setPermalink(data.permalink);
+        setEmail(data.email);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -44,6 +46,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
   }
   return (
     <Fragment>
+      <PageTitle title="Account Details" />
       {edit && (
         <Breadcrumbs
           breadcrumbs={[{ path: '/account', name: 'Account' }]}
@@ -51,22 +54,64 @@ const Setup: React.FC<Props> = ({ edit }) => {
         />
       )}
       <section className={styles.home}>
-        <form className={styles.container} onSubmit={setup}>
+        <form
+          className={styles.container}
+          onSubmit={setup}
+          style={{ display: 'flex', flexDirection: 'column' }}
+        >
           <h1>{edit ? 'Edit Details' : 'Create PayMate Page'}</h1>
           {error && <p>{error}</p>}
           {!edit && <p>Pick a username for people to use to send you money</p>}
-          <Input placeholder="Name" id="name" value={name} onValue={setName} />
-          <Input
+          <TextField
+            label="Name"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
             className={styles.username}
-            label="paymate.me/"
-            placeholder="username"
+            label="Username"
             id="username"
             value={permalink}
-            onValue={setPermalink}
+            InputProps={{
+              startAdornment: (
+                <Typography
+                  variant="subtitle1"
+                  sx={(theme) => ({
+                    color: theme.palette.text.secondary,
+                    mr: 0.2,
+                  })}
+                >
+                  paymate.me/
+                </Typography>
+              ),
+            }}
+            onChange={(e) => setPermalink(e.target.value)}
           />
-          <Button className={styles.button} type="submit">
-            {edit ? 'Save' : 'Register'}
+          <Button
+            className={styles.button}
+            type="submit"
+            variant="contained"
+            size="large"
+          >
+            {edit ? 'Save' : 'Create Page'}
           </Button>
+          {changePasswordSet ? (
+            <Typography>
+              We’ve sent an email to {email}. Click the second link to set a new
+              password.
+            </Typography>
+          ) : (
+            <Button
+              onClick={() => {
+                api.post('/auth/login', { email }).then(() => {
+                  setChangePasswordSet(true);
+                });
+              }}
+            >
+              Change Password
+            </Button>
+          )}
         </form>
       </section>
     </Fragment>

@@ -7,8 +7,9 @@ export default {
     }),
   },
   callback: {
-    query: Joi.object({
+    body: Joi.object({
       token: Joi.string().required(),
+      password: Joi.string().min(8),
     }),
   },
   setUserDetails: {
@@ -53,6 +54,12 @@ export default {
     body: Joi.object({
       oldIndex: Joi.number().min(0).required(),
       newIndex: Joi.number().min(0).required(),
+    }),
+  },
+  register: {
+    body: Joi.object({
+      email: Joi.string().email().lowercase().required(),
+      password: Joi.string().min(8).required(),
     }),
   },
 };

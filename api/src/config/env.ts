@@ -1,23 +1,4 @@
 import path from 'path';
-import configDev from './development';
-import configProd from './production';
-import configTest from './test';
-
-const getConfig = () => {
-  const env = process.env.NODE_ENV || 'development';
-  switch (env) {
-    case 'development':
-      return configDev;
-    case 'production':
-      return configProd;
-    case 'test':
-      return configTest;
-    default:
-      return { env };
-  }
-};
-
-const config = getConfig();
 
 export interface IConfig {
   root: string;
@@ -28,8 +9,8 @@ export interface IConfig {
     db: string;
   };
   env: string;
-  port: number;
-  jwtSecret?: string;
+  port: string;
+  jwtSecret: string;
   email?: {
     user: string;
     pass: string;
@@ -43,17 +24,17 @@ export interface IConfig {
   };
 }
 
-const defaults: IConfig = {
-  env: 'development',
+const config: IConfig = {
+  env: process.env.NODE_ENV || 'development',
   root: path.join(__dirname, '/..'),
-  port: 8000,
+  port: process.env.PORT || '8000',
   db: {
-    host: 'localhost',
-    // user: 'root',
-    // pass: 'Password123',
-    db: 'paymate',
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER,
+    pass: process.env.DB_PASS,
+    db: process.env.DB_DB || 'paymate',
   },
-  jwtSecret: '8e4a51a2-4563-4dd3-949e-5bc655b3eba8',
+  jwtSecret: process.env.JWT_SECRET,
   host: process.env.HOST || 'http://localhost:3000',
   rateLimit: {
     points: Number(process.env.RATE_LIMIT_POINTS) || 20,
@@ -67,6 +48,4 @@ const defaults: IConfig = {
   },
 };
 
-const finalConfig: IConfig = Object.assign({}, defaults, config);
-
-export default finalConfig;
+export default config;

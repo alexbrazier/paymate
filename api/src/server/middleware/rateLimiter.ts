@@ -10,7 +10,7 @@ const rateLimiter = new RateLimiterMemory({
 
 const rateLimiterMiddleware = (req, res, next) => {
   rateLimiter
-    .consume(req.ip)
+    .consume(req.headers['cf-connecting-ip'] || req.ip)
     .then(() => {
       next();
     })

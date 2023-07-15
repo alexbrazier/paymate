@@ -6,7 +6,7 @@ interface Props extends React.HTMLProps<any> {
   icon: string;
   name: string;
   url?: string;
-  url_amount?: string;
+  urlAmount?: string;
   permalink?: string;
   amount?: string;
   to?: any;
@@ -37,7 +37,7 @@ const Provider: React.FC<Props> = ({
   icon,
   name,
   url,
-  url_amount: urlAmount,
+  urlAmount,
   permalink,
   amount,
   to,
@@ -47,13 +47,16 @@ const Provider: React.FC<Props> = ({
   const Wrapper = url ? 'a' : to ? CustomLink : 'div';
   return (
     <Wrapper
-      href={url && getUrl(amount ? urlAmount : url, permalink, amount)}
+      href={
+        url && getUrl(amount && urlAmount ? urlAmount : url, permalink, amount)
+      }
       to={to}
       {...props}
     >
       <img
         src={`/providers/${icon}.jpg`}
         className={styles.provider}
+        style={{ cursor: url || to || props.onClick ? 'pointer' : 'default' }}
         alt={name}
       />
     </Wrapper>

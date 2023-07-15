@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
 import cn from 'classnames';
+import { Button } from '@mui/material';
+import Link from '../Link';
 import * as API from '../../api';
 import styles from './Header.module.scss';
 import useClickOutside from './useClickOutside';
@@ -39,28 +40,28 @@ const Header: React.FC<Props> = () => {
 
   return (
     <header className={styles.header}>
-      <Link href="/">
-        <a className={cn(styles.userButton, styles.logoButton)}>
-          <img className={styles.logo} src="/logo.png" alt="" />
-          PayMate
-        </a>
+      <Link href="/" className={cn(styles.userButton, styles.logoButton)}>
+        <img className={styles.logo} src="/logo.png" alt="" />
+        PayMate
       </Link>
-      {user && (
+      {user ? (
         <div className={styles.user} ref={ref}>
           <button
             className={styles.userButton}
             onClick={() => setShowMenu(!showMenu)}
           >
-            {user.name}
+            {user.name || 'User'}
           </button>
           {showMenu && (
             <ul className={styles.menu}>
               {links.map(({ to, name }) => (
                 <li key={to}>
-                  <Link href={to}>
-                    <a className={styles.userButton} onClick={hideMenu}>
-                      {name}
-                    </a>
+                  <Link
+                    href={to}
+                    className={styles.userButton}
+                    onClick={hideMenu}
+                  >
+                    {name}
                   </Link>
                 </li>
               ))}
@@ -72,6 +73,15 @@ const Header: React.FC<Props> = () => {
             </ul>
           )}
         </div>
+      ) : (
+        <Button
+          variant="contained"
+          href="/login"
+          sx={{ my: 1, mr: 2 }}
+          LinkComponent={Link}
+        >
+          Login or Register
+        </Button>
       )}
     </header>
   );
