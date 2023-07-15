@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Input from '../../../components/Input';
@@ -50,7 +51,13 @@ const EditProvider: React.FC<Props> = () => {
     return <Loading />;
   }
   return (
-    <Fragment>
+    <Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <PageTitle title={`Edit ${provider.name}`} />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
@@ -72,7 +79,7 @@ const EditProvider: React.FC<Props> = () => {
           Delete
         </Button>
       </form>
-    </Fragment>
+    </Container>
   );
 };
 

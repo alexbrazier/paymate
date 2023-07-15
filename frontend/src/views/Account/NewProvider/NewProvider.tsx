@@ -1,4 +1,5 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Container } from '@mui/material';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Breadcrumbs from '../../../components/Breadcrumbs';
@@ -6,6 +7,7 @@ import Loading from '../../../components/Loading';
 import styles from './NewProvider.module.scss';
 import { useRouter } from 'next/router';
 import PageTitle from '../../../components/PageTitle';
+
 interface Props {
   match: any;
 }
@@ -32,7 +34,7 @@ const NewProvider: React.FC<Props> = () => {
     return null;
   }
   return (
-    <Fragment>
+    <Container>
       <PageTitle title="Add Provider" />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
@@ -69,7 +71,7 @@ const NewProvider: React.FC<Props> = () => {
           ))}
         </div>
       </div>
-    </Fragment>
+    </Container>
   );
 };
 
