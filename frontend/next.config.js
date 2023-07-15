@@ -6,6 +6,7 @@
 const config = {
   output: 'standalone',
   poweredByHeader: false,
+  compress: false,
 };
 
 module.exports = config;
