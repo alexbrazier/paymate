@@ -59,12 +59,16 @@ app.use(
     next: NextFunction
   ) => {
     if (err instanceof expressValidation.ValidationError) {
-      // validation error contains errors which is an array of error each containing message[]
-      const unifiedErrorMessage = (err as any).errors
-        ?.map((error: any) => error.messages.join('. '))
-        .join(' and ');
+      const errors = [];
+      Object.keys(err.details).forEach((key) => {
+        errors.push(...err.details[key].map((error) => error.message));
+      });
 
-      const error = new APIError(unifiedErrorMessage, 400, true);
+      const message = `${err.message}${
+        errors.length ? `: ${errors.join(', ')}` : ''
+      }`;
+
+      const error = new APIError(message, 400, true);
       return next(error);
     } else if (!(err instanceof APIError)) {
       const apiError = new APIError(err.message, err.status, err.isPublic);

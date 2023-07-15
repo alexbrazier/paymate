@@ -1,4 +1,10 @@
 import Joi from 'joi';
+import fs from 'fs';
+import path from 'path';
+
+const bannedPermalinks = fs
+  .readFileSync(path.join(__dirname, 'bannedPermalinks.txt'), 'utf8')
+  .split('\n');
 
 export default {
   login: {
@@ -17,30 +23,9 @@ export default {
       permalink: Joi.string()
         .min(4)
         .max(30)
-        .alphanum()
+        .regex(/^[a-z]+\d{0,3}$/, { name: 'permalink' })
         .lowercase()
-        .disallow(
-          'about',
-          'api',
-          'account',
-          'blog',
-          'donate',
-          'github',
-          'help',
-          'info',
-          'issues',
-          'legal',
-          'notifications',
-          'privacy',
-          'security',
-          'settings',
-          'share',
-          'shop',
-          'status',
-          'support',
-          'terms',
-          'translate'
-        )
+        .disallow(...bannedPermalinks)
         .required(),
       name: Joi.string().min(1).max(80).required(),
     }),
