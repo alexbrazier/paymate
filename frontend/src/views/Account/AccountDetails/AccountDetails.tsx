@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, TextField, Typography, Container } from '@mui/material';
 import styles from './AccountDetails.module.scss';
 import * as API from '../../../api';
 import Loading from '../../../components/Loading';
@@ -45,7 +45,13 @@ const Setup: React.FC<Props> = ({ edit }) => {
     return <Loading />;
   }
   return (
-    <Fragment>
+    <Container
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <PageTitle title="Account Details" />
       {edit && (
         <Breadcrumbs
@@ -79,7 +85,8 @@ const Setup: React.FC<Props> = ({ edit }) => {
                   variant="subtitle1"
                   sx={(theme) => ({
                     color: theme.palette.text.secondary,
-                    mr: 0.2,
+                    fontWeight: 'bold',
+                    mr: 0.5,
                   })}
                 >
                   paymate.me/
@@ -114,7 +121,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
           )}
         </form>
       </section>
-    </Fragment>
+    </Container>
   );
 };
 

@@ -11,7 +11,7 @@ interface Props {
 }
 
 const ButtonLink: React.FC<Props> = ({ children, to, className, ...rest }) => (
-  <Link href={to}>
+  <Link href={to} legacyBehavior>
     <a
       className={cn(styles.buttonLink, buttonStyles.button, className)}
       {...rest}

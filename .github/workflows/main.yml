@@ -1,0 +1,65 @@
+name: Build and Deploy
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - uses: actions/cache@v3
+        id: next-cache
+        with:
+          path: |
+            ${{ github.workspace }}/frontend/.next/cache
+          key: ${{ runner.os }}-next-js-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-next-js-
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.1
+
+      - name: Yarn Install
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Prettier
+        run: yarn prettier && echo -e "\033[0;32mPrettier passed"
+
+      - name: ESLint
+        run: |
+          yarn lint && echo -e "\033[0;32mESLint passed"
+
+      - name: Build
+        run: |
+          yarn build:docker
+          docker images
+
+      - name: Docker login
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASS }}
+
+      - name: Publish Docker
+        if: github.ref == 'refs/heads/master'
+        run: |
+          docker push alexbrazier/paymate

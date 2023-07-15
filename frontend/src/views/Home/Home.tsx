@@ -40,110 +40,110 @@ const Home: React.FC = ({ providers }: any) => {
     return <Loading />;
   }
 
+  if (user) {
+    return (
+      <Container className={styles.home} maxWidth="md">
+        <Typography variant="h1">PayMate.me</Typography>
+
+        <p>Welcome back {user.name}</p>
+        <ButtonLink className={styles.returningButton} to="/account">
+          View Account
+        </ButtonLink>
+        <ButtonLink
+          className={styles.returningButton}
+          to={`/${user.permalink}`}
+        >
+          View personal payment page
+        </ButtonLink>
+      </Container>
+    );
+  }
+
   return (
     <>
       <Container className={styles.home} maxWidth="md">
-        {user ? (
-          <>
-            <Typography variant="h1">PayMate.me</Typography>
-
-            <p>Welcome back {user.name}</p>
-            <ButtonLink className={styles.returningButton} to="/account">
-              View Account
-            </ButtonLink>
-            <ButtonLink
-              className={styles.returningButton}
-              to={`/${user.permalink}`}
-            >
-              View personal payment page
-            </ButtonLink>
-          </>
-        ) : (
-          <>
-            <Typography variant="h1" sx={{ fontSize: '3rem' }}>
-              Introducing PayMate.me
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              sx={(theme) => ({ color: theme.palette.grey[500] })}
-            >
-              A simple way to get paid by friends and family
-            </Typography>
-            <Typography sx={{ mt: 3, fontSize: 18 }}>
-              Pay or get paid by sharing a link with friends and family and
-              consolidate all of your payment methods in one place. PayMate.me
-              allows you to create a personal payment page with links to your
-              preferred payment methods.
-            </Typography>
-            <Alert variant="outlined" severity="info" sx={{ my: 2 }}>
-              PayMate.me only provides links to payment providers. The site does
-              not process any payments itself.
-            </Alert>
-            <Typography sx={{ fontWeight: 'bold', mt: 2 }}>
-              Enter username to send money to:
-            </Typography>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                router.push(`/${urlEntry}`);
+        <Typography variant="h1" sx={{ fontSize: '3rem' }}>
+          Introducing PayMate.me
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={(theme) => ({ color: theme.palette.grey[500] })}
+        >
+          A simple way to get paid by friends and family
+        </Typography>
+        <Typography sx={{ mt: 3, fontSize: 18 }}>
+          Pay or get paid by sharing a link with friends and family and
+          consolidate all of your payment methods in one place. PayMate.me
+          allows you to create a personal payment page with links to your
+          preferred payment methods.
+        </Typography>
+        <Alert variant="outlined" severity="info" sx={{ my: 2 }}>
+          PayMate.me only provides links to payment providers. The site does not
+          process any payments itself.
+        </Alert>
+        <Typography sx={{ fontWeight: 'bold', mt: 2 }}>
+          Enter username to send money to:
+        </Typography>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            router.push(`/${urlEntry}`);
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+            }}
+          >
+            <TextField
+              value={urlEntry}
+              onChange={(e) => setUrlEntry(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <Typography
+                    variant="subtitle1"
+                    sx={(theme) => ({
+                      color: theme.palette.text.secondary,
+                      fontWeight: 'bold',
+                      mr: 0.5,
+                    })}
+                  >
+                    paymate.me/
+                  </Typography>
+                ),
               }}
+            />
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ ml: 2 }}
+              type="submit"
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                }}
-              >
-                <TextField
-                  value={urlEntry}
-                  onChange={(e) => setUrlEntry(e.target.value)}
-                  InputProps={{
-                    startAdornment: (
-                      <Typography
-                        variant="subtitle1"
-                        sx={(theme) => ({
-                          color: theme.palette.text.secondary,
-                          fontWeight: 'bold',
-                          mr: 0.5,
-                        })}
-                      >
-                        paymate.me/
-                      </Typography>
-                    ),
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  size="large"
-                  sx={{ ml: 2 }}
-                  type="submit"
-                >
-                  Pay
-                </Button>
-              </Box>
-            </form>
+              Pay
+            </Button>
+          </Box>
+        </form>
 
-            <Divider sx={{ my: 3 }} />
-            <Typography variant="h2" sx={{ mt: 5, textAlign: 'center' }}>
-              Supported Providers
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                mb: 4,
-              }}
-            >
-              {providers.map((provider: any) => (
-                <Provider
-                  key={provider._id}
-                  icon={provider.icon}
-                  name={provider.name}
-                />
-              ))}
-            </Box>
-          </>
-        )}
+        <Divider sx={{ my: 3 }} />
+        <Typography variant="h2" sx={{ mt: 5, textAlign: 'center' }}>
+          Supported Providers
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            mb: 4,
+          }}
+        >
+          {providers.map((provider: any) => (
+            <Provider
+              key={provider._id}
+              icon={provider.icon}
+              name={provider.name}
+            />
+          ))}
+        </Box>
       </Container>
       <Box
         sx={(theme) => ({

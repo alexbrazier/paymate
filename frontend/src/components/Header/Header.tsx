@@ -35,7 +35,7 @@ const Header: React.FC<Props> = () => {
   const links = [
     { to: '/account', name: 'Account' },
     { to: '/account/settings', name: 'Settings' },
-    { to: `/${user && user.permalink}`, name: 'My Page' },
+    { to: `/${(user && user.permalink) || 'account'}`, name: 'My Page' },
   ];
 
   return (
