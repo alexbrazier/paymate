@@ -88,13 +88,22 @@ export async function login(req: IRequest, res: IResponse) {
 }
 
 export async function callback(req: IRequest, res: IResponse) {
-  const { token } = req.query;
+  const { token, password } = req.body;
   try {
     const decoded: any = await verifyJwt(token, config.jwtSecret);
     if (decoded.type !== 'login') {
       throw new Error('Invalid jwt type');
     }
     const user = await User.findOne({ email: decoded.email }).select('+email');
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (password) {
+      user.password = password;
+      await user.save();
+    }
 
     const result = signJwt(user.id, user.email);
 

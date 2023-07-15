@@ -12,7 +12,7 @@ router
   .post(validate(userValidation.login), asyncMiddleware(auth.login));
 router
   .route('/callback')
-  .get(validate(userValidation.callback), asyncMiddleware(auth.callback));
+  .post(validate(userValidation.callback), asyncMiddleware(auth.callback));
 
 router.route('/login2').post(asyncMiddleware(auth.login2));
 

@@ -5,14 +5,13 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Breadcrumbs from '../../../components/Breadcrumbs';
 import Loading from '../../../components/Loading';
-import usePageTitle from '../../../hooks/usePageTitle';
 import styles from './EditProvider.module.scss';
 import { useRouter } from 'next/router';
+import PageTitle from '../../../components/PageTitle';
 
 interface Props {}
 
 const EditProvider: React.FC<Props> = () => {
-  usePageTitle('Edit Provider');
   const [provider, setProvider] = useState<any>();
   const [permalink, setPermalink] = useState('');
   const [saved, setSaved] = useState(false);
@@ -52,6 +51,7 @@ const EditProvider: React.FC<Props> = () => {
   }
   return (
     <Fragment>
+      <PageTitle title={`Edit ${provider.name}`} />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
         currentPage={`Edit ${provider.name}`}

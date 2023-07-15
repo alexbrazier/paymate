@@ -19,8 +19,8 @@ export const getUser = (permalink: string) => api.get(`/user/${permalink}`);
 
 export const login = (email: string) => api.post('/auth/login', { email });
 
-export const verifyToken = (token: string) =>
-  api.get('/auth/callback', { params: { token } });
+export const verifyToken = (token: string, password?: string) =>
+  api.post('/auth/callback', { token, password });
 
 export const accountDetails = () => {
   return axios.get('/api/user', {

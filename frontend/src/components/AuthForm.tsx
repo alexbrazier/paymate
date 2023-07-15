@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { Paper, TextField, Button, Box, Divider } from '@mui/material';
+import { Paper, TextField, Button, Box, Divider, Alert } from '@mui/material';
 import { api } from '../api';
+import { useRouter } from 'next/router';
 
 const AuthForm = () => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState<'password' | 'register' | 'magicLink'>();
+  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const checkEmail = async () => {
     setLoading(true);
@@ -22,6 +25,21 @@ const AuthForm = () => {
   };
 
   const emailEntered = state === 'password' || state === 'register';
+
+  const handleError = (err: any) => {
+    if (err.response) {
+      setError(err.response.data.message);
+    } else {
+      setError(err.message || 'Unknown error');
+    }
+  };
+
+  const handleLogin = (res: any) => {
+    if (res?.data?.token) {
+      localStorage.setItem('token', res.data.token);
+      router.push('/account');
+    }
+  };
 
   return (
     <Paper sx={{ p: 3, width: 500, maxWidth: '100%', mt: 2 }}>
@@ -43,12 +61,23 @@ const AuthForm = () => {
             if (!state) {
               checkEmail();
             } else if (state === 'password') {
-              api.post('/auth/login/password', { email, password });
+              api
+                .post('/auth/login/password', { email, password })
+                .then(handleLogin)
+                .catch(handleError);
             } else if (state === 'register') {
-              api.post('/auth/register', { email, password });
+              api
+                .post('/auth/register', { email, password })
+                .then(handleLogin)
+                .catch(handleError);
             }
           }}
         >
+          {error && (
+            <Alert severity="error" sx={{ my: 3 }}>
+              {error}
+            </Alert>
+          )}
           <Box display="flex">
             <TextField
               name="email"
@@ -96,7 +125,7 @@ const AuthForm = () => {
               <Button
                 onClick={async () => {
                   setLoading(true);
-                  await api.post('/auth/login', { email });
+                  await api.post('/auth/login', { email }).catch(handleError);
                   setState('magicLink');
                   setLoading(false);
                 }}

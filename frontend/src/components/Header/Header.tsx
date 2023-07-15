@@ -50,7 +50,7 @@ const Header: React.FC<Props> = () => {
             className={styles.userButton}
             onClick={() => setShowMenu(!showMenu)}
           >
-            {user.name}
+            {user.name || 'User'}
           </button>
           {showMenu && (
             <ul className={styles.menu}>

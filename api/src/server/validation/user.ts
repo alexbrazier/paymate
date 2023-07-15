@@ -7,8 +7,9 @@ export default {
     }),
   },
   callback: {
-    query: Joi.object({
+    body: Joi.object({
       token: Joi.string().required(),
+      password: Joi.string().min(8),
     }),
   },
   setUserDetails: {

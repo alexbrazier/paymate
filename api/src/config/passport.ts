@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import User from '../server/models/User';
+import APIError from '../server/helpers/APIError';
 
 passport.use(
   new LocalStrategy(
@@ -12,13 +13,13 @@ passport.use(
       const user = await User.findOne({ email }).select('email password');
 
       if (!user) {
-        return cb(null, false, { message: 'Incorrect username or password.' });
+        return cb(new APIError('Incorrect username or password.', 401, true));
       }
 
       const passwordMatch = await (user as any).comparePassword(password);
 
       if (!passwordMatch) {
-        return cb(null, false, { message: 'Incorrect username or password.' });
+        return cb(new APIError('Incorrect username or password.', 401, true));
       }
 
       return cb(null, {

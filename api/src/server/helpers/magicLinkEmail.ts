@@ -31,6 +31,7 @@ const magicLinkEmail = (link: string) => `
 								<tr style="margin: 0; padding: 0;">
                   <td style="margin: 0; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; padding: 0 0 20px;" valign="top">
                   This link will be valid for the next 10 minutes. If it expires just enter your email again to request a new one. <br /><br />If you did not request a login link you can safely ignore this email.
+				  <br /><br />Want to reset or set a password for your account? <a href="${link}&setPassword=1">Click here</a>
                   </td>
                 </tr>
 								<tr style="margin: 0; padding: 0;">
