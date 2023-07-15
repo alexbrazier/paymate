@@ -3,12 +3,25 @@ import { api } from '../api';
 
 export { default } from '../views/Home';
 
-export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('/provider');
+const MINUTES = 60;
+const revalidate = 60 * MINUTES;
 
-  return {
-    props: {
-      providers: data.providers,
-    },
-  };
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const { data } = await api.get('/provider');
+
+    return {
+      props: {
+        providers: data.providers,
+      },
+      revalidate,
+    };
+  } catch {
+    return {
+      props: {
+        providers: [],
+      },
+      revalidate: 60,
+    };
+  }
 };

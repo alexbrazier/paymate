@@ -2,7 +2,9 @@ import axios from 'axios';
 
 const apiUrl =
   typeof window === 'undefined'
-    ? process.env.NEXT_PUBLIC_SERVER_API_URL || 'http://localhost:8000/api'
+    ? process.env.BUILD_API_URL ||
+      process.env.NEXT_PUBLIC_SERVER_API_URL ||
+      'http://localhost:8000/api'
     : '/api';
 
 export const api = axios.create({
