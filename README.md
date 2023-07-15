@@ -1,7 +1,6 @@
 # PayMate
 
 [![CircleCI](https://circleci.com/gh/alexbrazier/paymate.svg?style=svg)](https://circleci.com/gh/alexbrazier/paymate)
-[![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/tgmumd/runs)
 [![api dependencies](https://img.shields.io/david/alexbrazier/paymate.svg?path=api&label=API%20dependencies)](https://david-dm.org/alexbrazier/paymate?path=api)
 [![frontend dependencies](https://img.shields.io/david/alexbrazier/paymate.svg?path=frontend&label=frontend%20dependencies)](https://david-dm.org/alexbrazier/paymate?path=frontend)
 

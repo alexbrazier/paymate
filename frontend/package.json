@@ -9,8 +9,6 @@
     "start:prod": "next start",
     "build": "BUILD_API_URL=https://paymate.me/api next build",
     "test": "jest",
-    "test:e2e": "cypress run",
-    "test:e2e:local": "cypress open",
     "lint": "eslint \"src/**/*.{j,t}s{x,}\"",
     "prettier": "prettier \"src/**/*.{js,ts,tsx,jsx,css,scss,json,html}\"",
     "prettier:check": "yarn prettier --check",
@@ -52,7 +50,6 @@
     "@types/qs": "^6.9.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "cypress": "^12.17.1",
     "eslint-plugin-react": "^7.32.2",
     "sass": "^1.63.6",
     "wait-on": "^7.0.1"
