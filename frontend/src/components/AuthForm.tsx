@@ -35,8 +35,7 @@ const AuthForm = () => {
   };
 
   const handleLogin = (res: any) => {
-    if (res?.data?.token) {
-      localStorage.setItem('token', res.data.token);
+    if (res?.data) {
       router.push('/account');
     }
   };

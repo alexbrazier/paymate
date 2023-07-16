@@ -10,6 +10,7 @@ const router = express.Router(); // eslint-disable-line new-cap
 router
   .route('/login')
   .post(validate(userValidation.login), asyncMiddleware(auth.login));
+router.post('/logout', asyncMiddleware(auth.logout));
 router
   .route('/callback')
   .post(validate(userValidation.callback), asyncMiddleware(auth.callback));

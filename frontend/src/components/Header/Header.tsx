@@ -17,7 +17,7 @@ const Header: React.FC<Props> = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (user || !localStorage.getItem('token')) {
+    if (user || !API.getTokenInfo()) {
       return;
     }
     API.accountDetails()
@@ -28,8 +28,9 @@ const Header: React.FC<Props> = () => {
   const onLogout = () => {
     setShowMenu(false);
     setUser(null);
-    router.push('/');
-    localStorage.removeItem('token');
+    API.api.post('/auth/logout').then(() => {
+      window.location.href = '/?logout=true';
+    });
   };
 
   const links = [

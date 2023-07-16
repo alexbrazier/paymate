@@ -19,8 +19,7 @@ const LoginCallback = () => {
     }
 
     verifyToken(token)
-      .then(({ data }) => {
-        localStorage.setItem('token', data.token);
+      .then(() => {
         setSuccess(true);
       })
       .catch((err) => setError(err.response.data.message));
@@ -52,8 +51,7 @@ const LoginCallback = () => {
             onSubmit={(e) => {
               e.preventDefault();
               verifyToken(token, password)
-                .then(({ data }) => {
-                  localStorage.setItem('token', data.token);
+                .then(() => {
                   setSuccess(true);
                 })
                 .catch((err) => setError(err.response.data.message));

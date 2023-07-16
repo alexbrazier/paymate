@@ -26,7 +26,7 @@ const Home: React.FC = ({ providers }: any) => {
   const [urlEntry, setUrlEntry] = useState('');
   const router = useRouter();
   useEffect(() => {
-    if (!localStorage.getItem('token')) {
+    if (!API.getTokenInfo()) {
       setLoading(false);
       return;
     }

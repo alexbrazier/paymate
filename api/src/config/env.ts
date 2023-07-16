@@ -2,6 +2,7 @@ import path from 'path';
 
 export interface IConfig {
   root: string;
+  https: boolean;
   db: {
     host: string;
     user?: string;
@@ -27,6 +28,7 @@ export interface IConfig {
 
 const config: IConfig = {
   env: process.env.NODE_ENV || 'development',
+  https: process.env.HTTPS === 'true' || process.env.NODE_ENV === 'production',
   root: path.join(__dirname, '/..'),
   port: process.env.PORT || '8000',
   db: {
