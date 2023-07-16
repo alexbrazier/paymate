@@ -5,20 +5,57 @@ import APIError from '../../helpers/APIError';
 import User from '../../models/User';
 import { sendMagicLinkEmail } from '../../helpers/Mailer';
 import config from '../../config/env';
-import { RequestHandler } from 'express';
+import { CookieOptions, Request, RequestHandler, Response } from 'express';
 import logger from '../../config/winston';
 
 const verifyJwt = util.promisify(jwt.verify) as any;
+const ONE_HOUR = 60 * 60 * 1000;
+const TOKEN_EXPIRY = ONE_HOUR * 24 * 30;
+
+const generateCsrf = () => {
+  const possible = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let text = '';
+
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  return text;
+};
+
+const getCookieOpts = ({
+  httpOnly = false,
+  maxAge = TOKEN_EXPIRY,
+} = {}): CookieOptions => ({
+  maxAge,
+  httpOnly,
+  sameSite: 'lax',
+  secure: config.https,
+});
+
+const setCookies = (req: Request, res: Response, accessToken: string) => {
+  const now = Date.now();
+  const cookieInfo = JSON.stringify({
+    expires: now + TOKEN_EXPIRY,
+    issued: now,
+  });
+
+  res.cookie('access_token', accessToken, getCookieOpts({ httpOnly: true }));
+  res.cookie('token_info', cookieInfo, getCookieOpts());
+  res.cookie('csrf_token', generateCsrf(), getCookieOpts());
+};
 
 export const passwordLoginCallback: RequestHandler = async (req, res) => {
   const user = req.user as any;
   const result = signJwt(user.id, user.email);
 
+  setCookies(req, res, result.token);
+
   res.json(result);
 };
 
 const signJwt = (id: string, email: string) => {
-  const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 5; // 5 hours
+  const exp = Math.floor((Date.now() + TOKEN_EXPIRY) / 1000);
   const token = jwt.sign(
     {
       id,
@@ -47,6 +84,8 @@ export const register: RequestHandler = async (req, res) => {
   await u.save();
 
   const result = signJwt(u.id, u.email);
+
+  setCookies(req, res, result.token);
 
   res.json(result);
 };
@@ -86,6 +125,14 @@ export const login: RequestHandler = async (req, res) => {
   res.json({ success: true });
 };
 
+export const logout: RequestHandler = async (req, res) => {
+  res.clearCookie('access_token');
+  res.clearCookie('token_info');
+  res.clearCookie('csrf_token');
+
+  res.json({ success: true });
+};
+
 export const callback: RequestHandler = async (req, res) => {
   const { token, password } = req.body;
   try {
@@ -102,6 +149,8 @@ export const callback: RequestHandler = async (req, res) => {
     }
 
     const result = signJwt(user.id, user.email);
+
+    setCookies(req, res, result.token);
 
     res.json(result);
   } catch (err) {
