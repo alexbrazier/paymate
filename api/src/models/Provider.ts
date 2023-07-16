@@ -5,16 +5,18 @@ export interface IProvider {
   icon: string;
   url: string;
   urlAmount: string;
+  public: boolean;
 }
 
 export interface IProviderModel extends IProvider, Document {}
 
-const ProviderSchema = new Schema(
+const ProviderSchema = new Schema<IProvider>(
   {
     name: { type: String },
     icon: { type: String },
     url: { type: String },
     urlAmount: { type: String },
+    public: { type: Boolean },
   },
   { timestamps: false }
 );

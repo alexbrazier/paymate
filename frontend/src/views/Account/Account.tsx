@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import * as API from '../../api';
 import Router from 'next/router';
+import { Container } from '@mui/material';
+import * as API from '../../api';
 import Provider from '../../components/Provider';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { ButtonLink } from '../../components/Button';
@@ -62,7 +63,7 @@ const Account = () => {
     return null;
   }
   return (
-    <div>
+    <Container>
       <PageTitle title="Account" />
       <h1>Account</h1>
       <p>
@@ -81,7 +82,7 @@ const Account = () => {
       <ButtonLink className={styles.addButton} to="/account/provider/new">
         Add New
       </ButtonLink>
-    </div>
+    </Container>
   );
 };
 export default Account;

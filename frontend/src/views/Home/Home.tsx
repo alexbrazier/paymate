@@ -137,11 +137,14 @@ const Home: React.FC = ({ providers }: any) => {
           }}
         >
           {providers.map((provider: any) => (
-            <Provider
-              key={provider._id}
-              icon={provider.icon}
-              name={provider.name}
-            />
+            <Box key={provider._id}>
+              <Provider icon={provider.icon} name={provider.name} />
+              <Typography
+                sx={{ textAlign: 'center', fontWeight: 'bold', mt: -2.5 }}
+              >
+                {provider.name}
+              </Typography>
+            </Box>
           ))}
         </Box>
       </Container>

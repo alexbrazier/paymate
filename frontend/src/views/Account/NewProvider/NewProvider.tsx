@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import * as API from '../../../api';
 import Provider from '../../../components/Provider';
 import Breadcrumbs from '../../../components/Breadcrumbs';
@@ -45,7 +45,7 @@ const NewProvider: React.FC<Props> = () => {
         {error && <p>{error}</p>}
         {loading && <Loading />}
         {!loading && !providers.length && (
-          <>
+          <Box sx={{ textAlign: 'center' }}>
             <p>You{"'"}ve already added all of the providers.</p>
             <p>
               <a
@@ -57,7 +57,7 @@ const NewProvider: React.FC<Props> = () => {
                 Suggest a new one!
               </a>
             </p>
-          </>
+          </Box>
         )}
         <div className={styles.providers}>
           {providers.map((p) => (

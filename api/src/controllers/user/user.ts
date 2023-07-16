@@ -73,7 +73,10 @@ export const setUserDetails: RequestHandler = async (req, res) => {
 
 export const getAvailableProviders: RequestHandler = async (req, res) => {
   const user = await getDbUser(req);
-  const providers = await Provider.find({ _id: { $nin: user.providers } });
+  const providers = await Provider.find({
+    _id: { $nin: user.providers.map((p) => p.provider) },
+    public: true,
+  });
 
   res.json({ providers });
 };
@@ -119,7 +122,9 @@ export const saveProvider: RequestHandler = async (req, res) => {
 export const addProvider: RequestHandler = async (req, res) => {
   const user = await getDbUser(req);
 
-  if (!user.providers.find((p) => p.provider === req.params.provider)) {
+  if (
+    !user.providers.find((p) => p.provider.toString() === req.params.provider)
+  ) {
     user.providers.push({ provider: req.params.provider });
     await user.save();
   }
