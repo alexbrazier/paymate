@@ -841,3 +841,6 @@ paypal
 monzo
 pingit
 matepay
+revolut
+transferwise
+wise

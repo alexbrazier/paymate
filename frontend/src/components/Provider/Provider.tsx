@@ -54,7 +54,7 @@ const Provider: React.FC<Props> = ({
       {...props}
     >
       <img
-        src={`/providers/${icon}.jpg`}
+        src={`/providers/${icon}${icon.includes('.') ? '' : '.jpg'}`}
         className={styles.provider}
         style={{ cursor: url || to || props.onClick ? 'pointer' : 'default' }}
         alt={name}
