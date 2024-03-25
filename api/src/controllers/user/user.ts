@@ -1,7 +1,7 @@
 import httpStatus from 'http-status';
 import { Request, RequestHandler } from 'express';
 import User from '../../models/User';
-import Provider from '../../models/Provider';
+import Provider, { IProviderModel } from '../../models/Provider';
 import APIError from '../../helpers/APIError';
 
 const getDbUser = async (req: Request, extra?: any) => {
@@ -16,8 +16,14 @@ const getDbUser = async (req: Request, extra?: any) => {
 const getUserDetails = async ({ query, isPublic = true }: any) => {
   const user = await User.findOne(query)
     .select('+email')
-    .populate<{ providers: any }>('providers.provider')
+    .populate<{
+      providers: {
+        permalink: string;
+        provider: IProviderModel;
+      }[];
+    }>('providers.provider', 'name icon url urlAmount')
     .lean();
+
   if (!user) {
     throw new APIError('User not found', httpStatus.NOT_FOUND, true);
   }
@@ -25,7 +31,7 @@ const getUserDetails = async ({ query, isPublic = true }: any) => {
   const result = {
     name: user.name,
     permalink: user.permalink,
-    email: user.email,
+    ...(!isPublic && { email: user.email }),
     providers:
       user.providers
         ?.filter((provider) => !isPublic || !!provider.permalink)

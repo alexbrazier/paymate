@@ -16,7 +16,7 @@ const ProviderSchema = new Schema<IProvider>(
     icon: { type: String },
     url: { type: String },
     urlAmount: { type: String },
-    public: { type: Boolean },
+    public: { type: Boolean, select: false },
   },
   { timestamps: false }
 );
