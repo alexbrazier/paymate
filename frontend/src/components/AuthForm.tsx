@@ -3,7 +3,12 @@ import { Paper, TextField, Button, Box, Divider, Alert } from '@mui/material';
 import { api } from '../api';
 import { useRouter } from 'next/router';
 
-const AuthForm = () => {
+interface Props {
+  redirectTo?: string;
+  bare?: boolean;
+}
+
+const AuthForm: React.FC<Props> = ({ redirectTo = '/account', bare }) => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState<'password' | 'register' | 'magicLink'>();
   const [error, setError] = useState('');
@@ -36,12 +41,12 @@ const AuthForm = () => {
 
   const handleLogin = (res: any) => {
     if (res?.data) {
-      router.push('/account');
+      router.push(redirectTo);
     }
   };
 
-  return (
-    <Paper sx={{ p: 3, width: 500, maxWidth: '100%', mt: 2 }}>
+  const content = (
+    <>
       {state === 'magicLink' ? (
         <>
           <p e2e-handle="email-sent">A login email has been sent to {email}.</p>
@@ -134,7 +139,15 @@ const AuthForm = () => {
           )}
         </form>
       )}
-    </Paper>
+    </>
+  );
+
+  if (bare) {
+    return <Box>{content}</Box>;
+  }
+
+  return (
+    <Paper sx={{ p: 3, width: 500, maxWidth: '100%', mt: 2 }}>{content}</Paper>
   );
 };
 

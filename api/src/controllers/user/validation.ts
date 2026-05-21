@@ -30,6 +30,17 @@ export default {
       name: Joi.string().min(1).max(80).required(),
     }),
   },
+  checkPermalink: {
+    query: Joi.object({
+      permalink: Joi.string()
+        .min(4)
+        .max(30)
+        .regex(/^[a-z]+\d{0,3}$/, { name: 'permalink' })
+        .lowercase()
+        .disallow(...bannedPermalinks)
+        .required(),
+    }),
+  },
   saveProvider: {
     body: Joi.object({
       permalink: Joi.string().lowercase().required(),

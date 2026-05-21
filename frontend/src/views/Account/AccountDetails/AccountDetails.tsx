@@ -25,12 +25,14 @@ const Setup: React.FC<Props> = ({ edit }) => {
     API.accountDetails()
       .then(({ data }) => {
         setName(data.name);
-        setPermalink(data.permalink);
+        setPermalink(
+          data.permalink || (!edit && (router.query.permalink as string)) || ''
+        );
         setEmail(data.email);
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  }, []);
+  }, [edit, router.query.permalink]);
   const setup = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     API.setDetails({ name, permalink })

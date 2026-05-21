@@ -60,6 +60,12 @@
   letter-spacing: 0;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .menu {
   list-style: none;
   list-style-type: none;
@@ -102,5 +108,15 @@
 
   .logoButton {
     padding: 0 14px;
+  }
+
+  .actions {
+    gap: 6px;
+
+    a {
+      min-width: 0;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
 }

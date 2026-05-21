@@ -75,14 +75,24 @@ const Header: React.FC<Props> = () => {
           )}
         </div>
       ) : (
-        <Button
-          variant="contained"
-          href="/login"
-          sx={{ my: 1, mr: 2 }}
-          LinkComponent={Link}
-        >
-          Login or Register
-        </Button>
+        <div className={styles.actions}>
+          <Button
+            variant="outlined"
+            href="/create"
+            sx={{ my: 1 }}
+            LinkComponent={Link}
+          >
+            Create your page
+          </Button>
+          <Button
+            variant="contained"
+            href="/login"
+            sx={{ my: 1, mr: 2 }}
+            LinkComponent={Link}
+          >
+            Login
+          </Button>
+        </div>
       )}
     </header>
   );

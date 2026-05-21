@@ -52,6 +52,13 @@ export const getProviders: RequestHandler = async (req, res) => {
   res.json(result);
 };
 
+export const checkPermalink: RequestHandler = async (req, res) => {
+  const { permalink } = req.query;
+  const existingUser = await User.exists({ permalink });
+
+  res.json({ available: !existingUser });
+};
+
 export const getUser: RequestHandler = async (req, res) => {
   const result = await getUserDetails({
     query: { _id: req.user.id },

@@ -51,6 +51,12 @@ router
   .route('/available-providers')
   .get(requireAuth, asyncMiddleware(userCtrl.getAvailableProviders));
 router
+  .route('/check-permalink')
+  .get(
+    validate(userValidation.checkPermalink),
+    asyncMiddleware(userCtrl.checkPermalink)
+  );
+router
   .route('/provider/:provider')
   .get(requireAuth, asyncMiddleware(userCtrl.getProvider))
   .delete(requireAuth, asyncMiddleware(userCtrl.removeProvider))
