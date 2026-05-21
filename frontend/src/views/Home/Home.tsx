@@ -107,7 +107,7 @@ const Home: React.FC = ({ providers }: any) => {
               <Button
                 variant="contained"
                 size="large"
-                href="/login"
+                href="/create"
                 LinkComponent={Link}
               >
                 Get your link
@@ -291,9 +291,7 @@ const Home: React.FC = ({ providers }: any) => {
 
       <Box className={styles.ctaBand}>
         <Container maxWidth="md" className={styles.ctaContent}>
-          <Typography variant="h2">
-            Create a payment page people can trust.
-          </Typography>
+          <Typography variant="h2">Start with your PayMate link.</Typography>
           <Typography>
             Get a clean link for your preferred providers without asking anyone
             to enter payment details on PayMate.
@@ -301,10 +299,10 @@ const Home: React.FC = ({ providers }: any) => {
           <Button
             variant="contained"
             size="large"
-            href="/login"
+            href="/create"
             LinkComponent={Link}
           >
-            Login or register
+            Create your page
           </Button>
         </Container>
       </Box>

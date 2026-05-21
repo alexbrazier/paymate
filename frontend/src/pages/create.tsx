@@ -63,7 +63,7 @@ const CreatePage = () => {
     <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
       <PageTitle
         title="Create your PayMate page"
-        description="Claim your PayMate.me shortlink and register to create a clean page for your preferred payment providers."
+        description="Choose your PayMate.me shortlink first, then create a clean page for your preferred payment providers."
       />
       <Box
         sx={{
@@ -84,8 +84,8 @@ const CreatePage = () => {
             Claim your PayMate link first.
           </Typography>
           <Typography color="text.secondary" sx={{ fontSize: 18 }}>
-            Pick the shortlink you want people to use, then register to finish
-            creating your page.
+            Pick the shortlink you want people to use, then sign in or create an
+            account to finish your page.
           </Typography>
         </Box>
 
@@ -168,7 +168,7 @@ const CreatePage = () => {
             >
               <Stack direction="row" alignItems="center" spacing={1} mb={2}>
                 <Chip label="Step 2" size="small" color="primary" />
-                <Typography variant="h3">Register next</Typography>
+                <Typography variant="h3">Create your account</Typography>
               </Stack>
               <AuthForm bare redirectTo={registerRedirect} />
             </Paper>
