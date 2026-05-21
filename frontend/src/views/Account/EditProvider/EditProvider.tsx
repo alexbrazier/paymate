@@ -58,7 +58,7 @@ const EditProvider: React.FC<Props> = () => {
         alignItems: 'center',
       }}
     >
-      <PageTitle title={`Edit ${provider.name}`} />
+      <PageTitle title={`Edit ${provider.name}`} noindex />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
         currentPage={`Edit ${provider.name}`}

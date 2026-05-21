@@ -23,6 +23,7 @@ import Loading from '../../components/Loading';
 import Link from '../../components/Link';
 import Provider from '../../components/Provider/Provider';
 import { useRouter } from 'next/router';
+import PageTitle from '../../components/PageTitle';
 
 const Home: React.FC = ({ providers }: any) => {
   const [user, setUser] = useState<any>();
@@ -78,6 +79,10 @@ const Home: React.FC = ({ providers }: any) => {
 
   return (
     <>
+      <PageTitle
+        title="Get paid your way with one simple link"
+        description="Create one PayMate.me link for the payment providers you already use, then share it with friends and family."
+      />
       <Box className={styles.heroBand}>
         <Container className={styles.hero} maxWidth="lg">
           <Box className={styles.heroCopy}>
@@ -87,7 +92,7 @@ const Home: React.FC = ({ providers }: any) => {
               label="Links only, no payment handling"
             />
             <Typography variant="h1" sx={{ mt: 2 }}>
-              One trusted link for all the ways people pay you.
+              Get paid your way with one simple link.
             </Typography>
             <Typography
               variant="subtitle1"

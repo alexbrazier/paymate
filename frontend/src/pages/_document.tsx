@@ -26,13 +26,9 @@ export default class MyDocument extends Document {
             sizes="16x16"
             href="/favicon-16x16.png"
           />
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ea4442" />
-          <meta name="msapplication-TileColor" content="#282c34" />
-          <meta name="theme-color" content="#282c34" />
-          <meta
-            name="description"
-            content="Create your link, setup your accepted payment links, share it and start receiving money. Split a bill with friends or accept payments from customers."
-          />
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e4423f" />
+          <meta name="msapplication-TileColor" content="#f6f7fb" />
+          <meta name="theme-color" content="#f6f7fb" />
           <link rel="manifest" href="/manifest.json" />
           {process.env.NODE_ENV === 'production' &&
             process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
@@ -55,7 +51,7 @@ export default class MyDocument extends Document {
               </>
             )}
         </Head>
-        <body style={{ background: '#282c34' }}>
+        <body style={{ background: '#f6f7fb' }}>
           <Main />
           <NextScript />
         </body>

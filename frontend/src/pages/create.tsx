@@ -61,7 +61,10 @@ const CreatePage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
-      <PageTitle title="Create your PayMate page" />
+      <PageTitle
+        title="Create your PayMate page"
+        description="Claim your PayMate.me shortlink and register to create a clean page for your preferred payment providers."
+      />
       <Box
         sx={{
           display: 'grid',

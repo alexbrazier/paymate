@@ -3,6 +3,7 @@ import { Container, Typography, TextField, Button, Paper } from '@mui/material';
 import { verifyToken } from '../../api';
 import Loading from '../../components/Loading';
 import Router, { useRouter } from 'next/router';
+import PageTitle from '../../components/PageTitle';
 
 const LoginCallback = () => {
   const router = useRouter();
@@ -35,6 +36,7 @@ const LoginCallback = () => {
   if (enableSetPassword) {
     return (
       <Container>
+        <PageTitle title="Set password" noindex />
         <Paper sx={{ maxWidth: 500, margin: 'auto', p: 3 }}>
           <Typography
             variant="h1"
@@ -76,6 +78,11 @@ const LoginCallback = () => {
     );
   }
 
-  return <Loading />;
+  return (
+    <>
+      <PageTitle title="Logging in" noindex />
+      <Loading />
+    </>
+  );
 };
 export default LoginCallback;

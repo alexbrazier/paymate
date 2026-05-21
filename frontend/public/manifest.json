@@ -1,6 +1,6 @@
 {
   "short_name": "PayMate",
-  "name": "PayMate",
+  "name": "PayMate - Get paid your way with one simple link",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#282c34",
-  "background_color": "#282c34"
+  "theme_color": "#f6f7fb",
+  "background_color": "#f6f7fb"
 }

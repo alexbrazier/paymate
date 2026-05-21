@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /account
+Disallow: /account/
+Disallow: /login
+
+Sitemap: https://paymate.me/sitemap.xml

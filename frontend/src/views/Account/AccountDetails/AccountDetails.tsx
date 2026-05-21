@@ -54,7 +54,7 @@ const Setup: React.FC<Props> = ({ edit }) => {
         alignItems: 'center',
       }}
     >
-      <PageTitle title="Account Details" />
+      <PageTitle title="Account Details" noindex />
       {edit && (
         <Breadcrumbs
           breadcrumbs={[{ path: '/account', name: 'Account' }]}

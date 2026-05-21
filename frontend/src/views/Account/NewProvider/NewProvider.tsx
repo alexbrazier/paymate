@@ -35,7 +35,7 @@ const NewProvider: React.FC<Props> = () => {
   }
   return (
     <Container>
-      <PageTitle title="Add Provider" />
+      <PageTitle title="Add Provider" noindex />
       <Breadcrumbs
         breadcrumbs={[{ path: '/account', name: 'Account' }]}
         currentPage="Add Provider"

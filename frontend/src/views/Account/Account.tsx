@@ -64,7 +64,7 @@ const Account = () => {
   }
   return (
     <Container>
-      <PageTitle title="Account" />
+      <PageTitle title="Account" noindex />
       <h1>Account</h1>
       <p>
         Select a provider to edit details or remove, click the add button to add

@@ -5,6 +5,7 @@ import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../index.scss';
+import PageTitle from '../components/PageTitle';
 
 const theme = createTheme({
   palette: {
@@ -90,8 +91,29 @@ const App = ({ Component, pageProps }) => {
   return (
     <div id="root">
       <Head>
-        <title>PayMate - Send money instantly through a link</title>
+        <meta name="application-name" content="PayMate" />
+        <meta name="apple-mobile-web-app-title" content="PayMate" />
+        <meta name="format-detection" content="telephone=no" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'PayMate',
+              url: 'https://paymate.me',
+              description:
+                'Create one PayMate.me link for the payment providers you already use.',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: 'https://paymate.me/{search_term_string}',
+                'query-input': 'required name=search_term_string',
+              },
+            }),
+          }}
+        />
       </Head>
+      <PageTitle />
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />

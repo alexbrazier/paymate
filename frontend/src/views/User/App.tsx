@@ -53,7 +53,12 @@ function App({ user: initialUser, amount, error: initialError }) {
 
   return (
     <div className={styles.App}>
-      {user.name && <PageTitle title={`Pay ${user.name}`} />}
+      {user.name && (
+        <PageTitle
+          title={`Pay ${user.name}`}
+          description={`Choose how to pay ${user.name} using their PayMate payment links.`}
+        />
+      )}
       <section>
         <h1 className={styles.title}>Pay {user.name}</h1>
         {user.providers.map((provider) => (
