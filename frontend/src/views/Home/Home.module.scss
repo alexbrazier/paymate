@@ -1,18 +1,268 @@
+@import 'src/constants.scss';
+
 .home {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
 
-.returningButton {
-  margin-top: 10px;
+.heroBand {
+  width: 100%;
+  background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(241, 247, 247, 0.96)
+    ),
+    $background;
+  border-bottom: 1px solid rgba($grey, 0.08);
 }
 
-.container {
-  max-width: 700px;
-  margin: 20px;
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.75fr);
+  gap: 48px;
+  align-items: center;
+  min-height: calc(100vh - #{$header-height} - 120px);
+  padding-top: 72px;
+  padding-bottom: 72px;
 }
 
-.button {
-  margin: 20px 0;
+.heroCopy {
+  max-width: 720px;
+}
+
+.heroSubtitle {
+  max-width: 650px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+.trustChip {
+  border: 1px solid rgba(#0f8f8f, 0.2);
+  background: rgba(#0f8f8f, 0.08);
+  color: #0b6666;
+  font-weight: 700;
+}
+
+.trustList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 28px;
+  color: $light-grey;
+  font-weight: 700;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.trustPanel,
+.lookupPanel,
+.returningPanel {
+  border: 1px solid rgba($grey, 0.08);
+  box-shadow: 0 24px 60px rgba($grey, 0.1);
+}
+
+.trustPanel {
+  padding: 28px;
+}
+
+.trustPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.trustPanelItems {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+
+  > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 14px;
+    row-gap: 4px;
+    align-items: start;
+    padding: 16px;
+    border: 1px solid rgba($grey, 0.08);
+    border-radius: 8px;
+    background: $background;
+  }
+
+  svg {
+    grid-row: span 2;
+    margin-top: 2px;
+  }
+}
+
+.section {
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.lookupPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(360px, 1fr);
+  gap: 32px;
+  align-items: center;
+  padding: 32px;
+}
+
+.lookupForm {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+}
+
+.sectionHeading {
+  max-width: 720px;
+  margin: 0 auto 34px;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.stepCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  border: 1px solid rgba($grey, 0.08);
+  box-shadow: 0 14px 34px rgba($grey, 0.06);
+
+  svg {
+    font-size: 36px;
+  }
+}
+
+.providerBand {
+  width: 100%;
+  padding: 72px 0;
+  background: $white;
+  border-top: 1px solid rgba($grey, 0.08);
+  border-bottom: 1px solid rgba($grey, 0.08);
+}
+
+.providers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 18px;
+}
+
+.providerCard {
+  padding: 18px 14px;
+  text-align: center;
+  border: 1px solid rgba($grey, 0.08);
+  box-shadow: none;
+
+  img {
+    width: 92px;
+    margin: 0 auto 12px;
+    border-radius: 18px;
+  }
+}
+
+.providerName {
+  font-weight: 800;
+}
+
+.ctaBand {
+  width: 100%;
+  padding: 76px 20px;
+  background: #172033;
+  color: $white;
+}
+
+.ctaContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  text-align: center;
+
+  p {
+    max-width: 640px;
+    color: rgba($white, 0.76);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+.returningPanel {
+  margin: 72px auto;
+  padding: 36px;
+}
+
+.returningTitle {
+  margin-bottom: 12px;
+}
+
+.returningButton,
+.secondaryButton {
+  width: auto;
+  min-width: 180px;
+  padding: 0 22px;
+  border-radius: 8px;
+  line-height: 48px;
+}
+
+.secondaryButton {
+  background: $white;
+  color: $primary;
+  border: 1px solid rgba($primary, 0.26);
+
+  &:hover,
+  &:focus {
+    background: rgba($primary, 0.06);
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .hero,
+  .lookupPanel,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    gap: 32px;
+    min-height: auto;
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .hero,
+  .section {
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+
+  .trustPanel,
+  .lookupPanel,
+  .returningPanel {
+    padding: 22px;
+  }
+
+  .lookupForm {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaBand,
+  .providerBand {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
 }

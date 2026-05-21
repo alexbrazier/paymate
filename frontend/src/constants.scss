@@ -1,15 +1,15 @@
-$light-grey: #707b8c;
-$grey: #282c34;
+$light-grey: #687285;
+$grey: #172033;
 $grey-l5: lighten($grey, 5%);
 $grey-l10: lighten($grey, 10%);
 $grey-l30: lighten($grey, 30%);
-$red-orange: #ea4442;
+$red-orange: #e4423f;
 $white: #fff;
 
 $primary: $red-orange;
 $primary-focus: darken($primary, 10%);
-$background: $grey;
-$text: $white;
+$background: #f6f7fb;
+$text: #172033;
 
 $container-width: 700px;
 $header-height: 60px;

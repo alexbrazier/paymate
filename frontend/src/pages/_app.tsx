@@ -6,34 +6,80 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import '../index.scss';
 
-const darkTheme = createTheme({
+const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: '#ea4442',
+      main: '#e4423f',
+      dark: '#bd2f2d',
     },
     secondary: {
-      main: '#42E8EA',
+      main: '#0f8f8f',
+      dark: '#0b6666',
+    },
+    background: {
+      default: '#f6f7fb',
+      paper: '#ffffff',
+    },
+    text: {
+      primary: '#172033',
+      secondary: '#5d6678',
     },
   },
   typography: {
+    fontFamily:
+      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
     button: {
       textTransform: 'none',
+      fontWeight: 700,
     },
     h1: {
-      fontSize: '2.5rem',
+      fontSize: 'clamp(2.6rem, 6vw, 4.6rem)',
+      lineHeight: 1.02,
+      fontWeight: 800,
+      letterSpacing: 0,
     },
     h2: {
-      fontSize: '2rem',
+      fontSize: 'clamp(2rem, 4vw, 3rem)',
+      lineHeight: 1.1,
+      fontWeight: 800,
+      letterSpacing: 0,
     },
     h3: {
-      fontSize: '1.75rem',
+      fontSize: '1.35rem',
+      lineHeight: 1.2,
+      fontWeight: 750,
+      letterSpacing: 0,
     },
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+          boxShadow: 'none',
+          minHeight: 44,
+        },
+        contained: {
+          boxShadow: '0 10px 22px rgba(228, 66, 63, 0.18)',
+        },
+      },
+    },
     MuiLink: {
       defaultProps: {
         underline: 'hover',
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
       },
     },
   },
@@ -47,7 +93,7 @@ const App = ({ Component, pageProps }) => {
         <title>PayMate - Send money instantly through a link</title>
       </Head>
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
           <main

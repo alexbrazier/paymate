@@ -5,12 +5,13 @@
   height: 3.5rem;
   padding: 0 1rem;
   border: 2px solid $primary;
-  border-radius: 2px;
+  border-radius: 8px;
   color: $white;
   background: $primary;
   cursor: pointer;
   transition: 0.2s;
   font-weight: bold;
+  box-shadow: 0 10px 22px rgba($primary, 0.18);
 
   &:hover {
     background: $primary-focus;

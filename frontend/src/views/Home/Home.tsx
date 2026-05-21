@@ -7,12 +7,16 @@ import {
   TextField,
   Container,
   Box,
-  Divider,
   Paper,
+  Stack,
+  Chip,
 } from '@mui/material';
-import OneIcon from '@mui/icons-material/LooksOne';
-import TwoIcon from '@mui/icons-material/LooksTwo';
-import ThreeIcon from '@mui/icons-material/Looks3';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import LinkOutlinedIcon from '@mui/icons-material/LinkOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
+import VerifiedUserOutlinedIcon from '@mui/icons-material/VerifiedUserOutlined';
 import { ButtonLink } from '../../components/Button';
 import * as API from '../../api';
 import Loading from '../../components/Loading';
@@ -40,62 +44,161 @@ const Home: React.FC = ({ providers }: any) => {
     return <Loading />;
   }
 
+  const supportedProviders = providers || [];
+
   if (user) {
     return (
       <Container className={styles.home} maxWidth="md">
-        <Typography variant="h1">PayMate.me</Typography>
-
-        <p>Welcome back {user.name}</p>
-        <ButtonLink className={styles.returningButton} to="/account">
-          View Account
-        </ButtonLink>
-        <ButtonLink
-          className={styles.returningButton}
-          to={`/${user.permalink}`}
-        >
-          View personal payment page
-        </ButtonLink>
+        <Paper className={styles.returningPanel} elevation={0}>
+          <Typography variant="overline" color="secondary.dark">
+            Welcome back
+          </Typography>
+          <Typography variant="h1" className={styles.returningTitle}>
+            {user.name}
+          </Typography>
+          <Typography color="text.secondary" sx={{ mb: 3 }}>
+            Manage your payment links or preview the page other people use to
+            pay you.
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+            <ButtonLink className={styles.returningButton} to="/account">
+              View account
+            </ButtonLink>
+            <ButtonLink
+              className={styles.secondaryButton}
+              to={`/${user.permalink}`}
+            >
+              View payment page
+            </ButtonLink>
+          </Stack>
+        </Paper>
       </Container>
     );
   }
 
   return (
     <>
-      <Container className={styles.home} maxWidth="md">
-        <Typography variant="h1" sx={{ fontSize: '3rem' }}>
-          Introducing PayMate.me
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          sx={(theme) => ({ color: theme.palette.grey[500] })}
-        >
-          A simple way to get paid by friends and family
-        </Typography>
-        <Typography sx={{ mt: 3, fontSize: 18 }}>
-          Pay or get paid by sharing a link with friends and family and
-          consolidate all of your payment methods in one place. PayMate.me
-          allows you to create a personal payment page with links to your
-          preferred payment methods.
-        </Typography>
-        <Alert variant="outlined" severity="info" sx={{ my: 2 }}>
-          PayMate.me only provides links to payment providers. The site does not
-          process any payments itself.
-        </Alert>
-        <Typography sx={{ fontWeight: 'bold', mt: 2 }}>
-          Enter username to send money to:
-        </Typography>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            router.push(`/${urlEntry}`);
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
+      <Box className={styles.heroBand}>
+        <Container className={styles.hero} maxWidth="lg">
+          <Box className={styles.heroCopy}>
+            <Chip
+              className={styles.trustChip}
+              icon={<VerifiedUserOutlinedIcon />}
+              label="Links only, no payment handling"
+            />
+            <Typography variant="h1" sx={{ mt: 2 }}>
+              One trusted link for all the ways people pay you.
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              className={styles.heroSubtitle}
+            >
+              Create a personal PayMate.me page that brings your preferred
+              payment providers together, then share one clean link with friends
+              and family.
+            </Typography>
+            <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+              <Button
+                variant="contained"
+                size="large"
+                href="/login"
+                LinkComponent={Link}
+              >
+                Get your link
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                href="#pay-someone"
+                LinkComponent={Link}
+              >
+                Pay someone
+              </Button>
+            </Stack>
+            <Box className={styles.trustList}>
+              <span>
+                <LockOutlinedIcon fontSize="small" /> No card details stored
+              </span>
+              <span>
+                <PaymentsOutlinedIcon fontSize="small" /> Pay via providers you
+                already use
+              </span>
+            </Box>
+          </Box>
+
+          <Paper className={styles.trustPanel} elevation={0}>
+            <Box className={styles.trustPanelHeader}>
+              <Box>
+                <Typography variant="overline" color="text.secondary">
+                  Built for confidence
+                </Typography>
+                <Typography variant="h3">
+                  Clear, provider-led payments
+                </Typography>
+              </Box>
+              <CheckCircleOutlineIcon color="secondary" />
+            </Box>
+            <Box className={styles.trustPanelItems}>
+              <Box>
+                <LockOutlinedIcon color="secondary" />
+                <Typography fontWeight="bold">
+                  No payment details collected
+                </Typography>
+                <Typography color="text.secondary">
+                  PayMate does not ask people to enter card or bank details.
+                </Typography>
+              </Box>
+              <Box>
+                <PaymentsOutlinedIcon color="secondary" />
+                <Typography fontWeight="bold">
+                  Provider apps handle the transaction
+                </Typography>
+                <Typography color="text.secondary">
+                  Payment links send people to the services they already use.
+                </Typography>
+              </Box>
+              <Box>
+                <VerifiedUserOutlinedIcon color="secondary" />
+                <Typography fontWeight="bold">
+                  One simple directory page
+                </Typography>
+                <Typography color="text.secondary">
+                  Your page lists payment options without processing money.
+                </Typography>
+              </Box>
+            </Box>
+            <Alert
+              icon={<LockOutlinedIcon fontSize="inherit" />}
+              severity="info"
+              sx={{ mt: 2 }}
+            >
+              PayMate sends people to payment providers. It does not process
+              payments.
+            </Alert>
+          </Paper>
+        </Container>
+      </Box>
+
+      <Container maxWidth="lg" className={styles.section} id="pay-someone">
+        <Paper className={styles.lookupPanel} elevation={0}>
+          <Box>
+            <Typography variant="h2">Send money to a PayMate link</Typography>
+            <Typography color="text.secondary" sx={{ mt: 1 }}>
+              Enter a username to open their payment page.
+            </Typography>
+          </Box>
+          <form
+            className={styles.lookupForm}
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (urlEntry.trim()) {
+                router.push(`/${urlEntry.trim()}`);
+              }
             }}
           >
             <TextField
+              fullWidth
               value={urlEntry}
               onChange={(e) => setUrlEntry(e.target.value)}
               InputProps={{
@@ -106,6 +209,7 @@ const Home: React.FC = ({ providers }: any) => {
                       color: theme.palette.text.secondary,
                       fontWeight: 'bold',
                       mr: 0.5,
+                      whiteSpace: 'nowrap',
                     })}
                   >
                     paymate.me/
@@ -116,105 +220,87 @@ const Home: React.FC = ({ providers }: any) => {
             <Button
               variant="contained"
               size="large"
-              sx={{ ml: 2 }}
               type="submit"
+              disabled={!urlEntry.trim()}
             >
               Pay
             </Button>
-          </Box>
-        </form>
+          </form>
+        </Paper>
+      </Container>
 
-        <Divider sx={{ my: 3 }} />
-        <Typography variant="h2" sx={{ mt: 5, textAlign: 'center' }}>
-          Supported Providers
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            mb: 4,
-          }}
-        >
-          {providers.map((provider: any) => (
-            <Box key={provider._id}>
-              <Provider icon={provider.icon} name={provider.name} />
-              <Typography
-                sx={{ textAlign: 'center', fontWeight: 'bold', mt: -2.5 }}
-              >
-                {provider.name}
-              </Typography>
-            </Box>
-          ))}
+      <Container maxWidth="lg" className={styles.section}>
+        <Box className={styles.sectionHeading}>
+          <Typography variant="h2">How it works</Typography>
+          <Typography color="text.secondary">
+            A simple directory page for your payment options.
+          </Typography>
+        </Box>
+
+        <Box className={styles.steps}>
+          <Paper className={styles.stepCard} elevation={0}>
+            <LinkOutlinedIcon color="secondary" />
+            <Typography variant="h3">Choose your link</Typography>
+            <Typography color="text.secondary">
+              Pick a PayMate.me username that is easy to share and remember.
+            </Typography>
+          </Paper>
+          <Paper className={styles.stepCard} elevation={0}>
+            <AccountBalanceWalletOutlinedIcon color="secondary" />
+            <Typography variant="h3">Add payment methods</Typography>
+            <Typography color="text.secondary">
+              Connect people to the providers or banks you already prefer.
+            </Typography>
+          </Paper>
+          <Paper className={styles.stepCard} elevation={0}>
+            <VerifiedUserOutlinedIcon color="secondary" />
+            <Typography variant="h3">Share with confidence</Typography>
+            <Typography color="text.secondary">
+              People choose where to pay, and PayMate stays out of the
+              transaction.
+            </Typography>
+          </Paper>
         </Box>
       </Container>
-      <Box
-        sx={(theme) => ({
-          backgroundColor: theme.palette.secondary.dark,
-          width: '100%',
-          p: 5,
-          py: 10,
-        })}
-      >
-        <Container maxWidth="md">
-          <Typography variant="h2" sx={{ mb: 3, textAlign: 'center' }}>
-            Get your PayMate.Me link today
+
+      <Box className={styles.providerBand}>
+        <Container maxWidth="lg">
+          <Box className={styles.sectionHeading}>
+            <Typography variant="h2">Supported providers</Typography>
+            <Typography color="text.secondary">
+              Keep the apps people already trust one click away.
+            </Typography>
+          </Box>
+          <Box className={styles.providers}>
+            {supportedProviders.map((provider: any) => (
+              <Paper className={styles.providerCard} key={provider._id}>
+                <Provider icon={provider.icon} name={provider.name} />
+                <Typography className={styles.providerName}>
+                  {provider.name}
+                </Typography>
+              </Paper>
+            ))}
+          </Box>
+        </Container>
+      </Box>
+
+      <Box className={styles.ctaBand}>
+        <Container maxWidth="md" className={styles.ctaContent}>
+          <Typography variant="h2">
+            Create a payment page people can trust.
+          </Typography>
+          <Typography>
+            Get a clean link for your preferred providers without asking anyone
+            to enter payment details on PayMate.
           </Typography>
           <Button
             variant="contained"
             size="large"
             href="/login"
-            fullWidth
             LinkComponent={Link}
           >
-            Login or Register
+            Login or register
           </Button>
-        </Container>
-      </Box>
-
-      <Box
-        sx={{
-          p: 5,
-        }}
-      >
-        <Container maxWidth="xl">
-          <Typography variant="h2" sx={{ mb: 3, textAlign: 'center' }}>
-            How it works
-          </Typography>
-
-          <Box
-            sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-          >
-            <Paper sx={{ p: 3, textAlign: 'center', m: 2, width: 300 }}>
-              <OneIcon sx={{ fontSize: 50 }} color="secondary" />
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Create a PayMate.me link
-              </Typography>
-              <Typography>
-                Choose a url for your personal payment page.
-              </Typography>
-            </Paper>
-            <Paper sx={{ p: 3, textAlign: 'center', m: 2, width: 300 }}>
-              <TwoIcon sx={{ fontSize: 50 }} color="secondary" />
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Add your payment methods
-              </Typography>
-              <Typography>
-                Add your payment methods depending on which providers/banks you
-                use.
-              </Typography>
-            </Paper>
-            <Paper sx={{ p: 3, textAlign: 'center', m: 2, width: 300 }}>
-              <ThreeIcon sx={{ fontSize: 50 }} color="secondary" />
-              <Typography variant="h3" sx={{ mb: 2 }}>
-                Share your PayMate.me link
-              </Typography>
-              <Typography>
-                Share your link with friends and family to get paid via any of
-                your payment methods.
-              </Typography>
-            </Paper>
-          </Box>
         </Container>
       </Box>
     </>
