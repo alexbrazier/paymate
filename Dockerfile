@@ -1,4 +1,4 @@
-FROM node:20.9.0-alpine3.18
+FROM node:24.22.1-alpine3.24
 
 WORKDIR /usr/local/app
 ENV NODE_ENV=production
