@@ -18,6 +18,9 @@
     "prettier": "yarn workspaces run prettier:check",
     "prettier:write": "yarn workspaces run prettier:write"
   },
+  "resolutions": {
+    "**/next/postcss": "^8.5.31"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
